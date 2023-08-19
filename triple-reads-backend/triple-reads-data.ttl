@@ -54,3 +54,15 @@ ex:book3 a schema:Book ;
     schema:genre ex:Fantasy ;
     schema:author ex:author1 ;
     schema:publisher "Publisher XYZ" .
+
+ex:book4 a schema:Book ;
+    schema:title "Book Title 4" ;
+    schema:isbn "978-9876543212" ;
+    schema:datePublished "2022-05-15" ;
+    schema:abstract "This is the abstract of Book 3." ;
+    schema:image "https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" ;
+    ex:addedBy ex:admin1 ;
+    schema:dateAdded "2022-06-01" ;
+    schema:genre ex:Fantasy ;
+    schema:author ex:author1 ;
+    schema:publisher "Publisher XYZ" .
