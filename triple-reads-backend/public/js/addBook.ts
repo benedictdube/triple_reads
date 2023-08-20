@@ -1,3 +1,5 @@
+const bookCover = "https://via.placeholder.com/200x300.png?text=Book+Cover";
+
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("addBookForm") as HTMLElement;
     const bookTitleInput = document.getElementById("bookTitleInput") as HTMLInputElement;
@@ -272,21 +274,30 @@ document.addEventListener("DOMContentLoaded", function () {
         if (coverUrl == "") {
             coverUrlInput.setCustomValidity("Please enter a cover URL");
             coverUrlInput.reportValidity();
+            setCoverImgInput(bookCover);
             return "";
         }
         else if (!isValidURL(coverUrl as string)) {
             coverUrlInput.setCustomValidity("Please enter a valid cover URL");
             coverUrlInput.reportValidity();
+            setCoverImgInput(bookCover);
             return "";
         }
         else if (!checkImageUrl(coverUrl)) {
             coverUrlInput.setCustomValidity("Please enter a valid image");
             coverUrlInput.reportValidity();
+            setCoverImgInput(bookCover);
             return "";
         }
-        const coverUrlImgInput = document.getElementById("coverUrlImgInput") as HTMLImageElement;
-        coverUrlImgInput.src = coverUrlInput.value;
+
+        setCoverImgInput(coverUrlInput.value);
+        
         return coverUrl;
+    }
+
+    function setCoverImgInput(src: string) {
+        const coverUrlImgInput = document.getElementById("coverUrlImgInput") as HTMLImageElement;
+        coverUrlImgInput.src = src;
     }
 
     function addBook(bookTitle:string, authors: string[], genres: string[], publisher: string, published: string, isbn: string, coverUrl: string, abstract: string) {
