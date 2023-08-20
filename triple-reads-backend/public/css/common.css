@@ -8,8 +8,11 @@
     --input-box-color: #F9F9F9;
     --input-box-border-color: #000000;
 
+    /* buttons */
     --add-btn-color: #4EE779;
+    --add-btn-color-hover: #19e351;
     --remove-btn-color: #FF5353;
+    --remove-btn-color-hover: #fa0c0c;
     --submit-btn-color: #6694D9;
 
     /* header dropdown */
@@ -27,4 +30,17 @@ body {
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--background-color);
+}
+
+.btn {
+    font-size: 22px;
+    padding: 16px;
+    width: 120px;
+}
+
+@media screen and (max-width: 1200px) {
+    .btn {
+        width: 105% !important;
+        float: left;
+    }
 }

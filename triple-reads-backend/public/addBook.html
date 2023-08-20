@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/addBook.css">
 
-    <script src="js/header.js"></script>
 </head>
 <body>
     <header class="header">
@@ -32,47 +31,64 @@
     <main>
         <h1>Add a Book</h1>
 
-        <form class="addBookForm">
-            <label>Book Title</label>
-            <input type="text" />
-            <br/>
+        <form class="addBookForm" id="addBookForm">
+            <section class="input-container">
+                <label>Book Title</label>
+                <input type="text" />
+            </section>
 
-            <label>Authors</label>
-            <input type="text" />
-            <br/>
+            <section class="input-container">
+                <label>Authors</label>
+                <article id="authoursInput">
+                    <input type="text" class="authorInput" />
+                </article>
+                <button type="button" id="addAuthor" class="btn add-btn">Add</button>
+            </section>
 
-            <label>Genres</label>
-            <input type="text" />
-            <br/>
+            <section class="input-container">
+                <label>Genres</label>
+                <article id="genresInput">
+                    <input type="text" class="genreInput" />
+                </article>
+                <button type="button" id="addGenre" class="btn add-btn">Add</button>
+            </section>
 
-            <label>Publisher</label>
-            <input type="text" />
-            <br/>
+            <section class="input-container">
+                <label>Publisher</label>
+                <input type="text" />
+            </section> 
 
-            <label>Published in (Year)</label>
-            <input type="number" />
-            <br/>
+            <section class="input-container">
+                <label>Published in (Year)</label>
+                <input type="number" />
+            </section>
             
-            <label>ISBN number</label>
-            <input type="tex" />
-            <br/>
+            <section class="input-container">
+                <label>ISBN number</label>
+                <input type="text" />
+            </section>
 
-            <label id="coverUrlLabel">Cover URL</label>
-            <textarea id="coverUrlInput"></textarea>
-            <img id="coverUrlImgInput" src="https://via.placeholder.com/200x300.png?text=Book+Cover" />
-            <!-- <img id="coverUrlImgInput" src="https://i.guim.co.uk/img/media/3cff9b49dc4f4902666c20a3b13d20e381bd3528/0_0_1464_2244/master/1464.jpg?width=140&dpr=2&s=none" /> -->
-            <br/>
+            <section class="input-container">
+                <label id="coverUrlLabel">Cover URL</label>
+                <textarea id="coverUrlInput"></textarea>
+                <img id="coverUrlImgInput" src="https://via.placeholder.com/200x300.png?text=Book+Cover" />
+                <!-- <img id="coverUrlImgInput" src="https://i.guim.co.uk/img/media/3cff9b49dc4f4902666c20a3b13d20e381bd3528/0_0_1464_2244/master/1464.jpg?width=140&dpr=2&s=none" /> -->
+            </section>
 
-            <label>Abstract</label>
-            <textarea></textarea>
-            <br/>
+            <section class="input-container">
+                <label>Abstract</label>
+                <textarea></textarea>
+            </section>
 
-            <button type="submit" class="submit-btn">Add Book</button>
+            <button type="submit" class="btn submit-btn">Add Book</button>
         </form>
     </main>
 
     <footer class="footer">
         &copy; 2023
     </footer>
+
+    <!-- <script src="js/header.js"></script> -->
+    <script src="js/addBook.js"></script>
 </body>
 </html>
