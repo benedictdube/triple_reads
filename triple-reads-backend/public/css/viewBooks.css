@@ -1,0 +1,50 @@
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-section {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.coverBook {
+    float: left;
+    width: 200px;
+    margin-bottom: 15px;
+}
+
+.bookTitle, 
+.authors {
+    color: #434343;
+    /* var(--heading-color) */
+}
+
+hr {
+    color: black;
+}
+
+.isbn,
+.genres,
+.publishInfo, 
+.abstract {
+    color: #575757;
+    /* var(--sub-heading-color); */
+    font-size: 16px;
+}
+
+.bookTitle {
+    margin: 5px 0px;
+    font-size: 32px;
+}
+
+.authors {
+    margin: 10px 0px;
+    font-size: 22px;
+}
