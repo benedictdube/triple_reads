@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Book</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/addBook.css">
+
+    <script src="js/header.js"></script>
+</head>
+<body>
+    <header class="header">
+        <section class="logo">
+            <img src="images/logo.png" />
+            <h1>TripleBooks</h1>
+        </section>
+
+        <section class="menu"> 
+            <button class="logged-btn" type="button">xyz@bbd.co.za</button>
+            <button id="dropdownButton">&#9660;</button>
+            <ul class="dropdown-content" id="dropdownContent">
+                <li><a href="#">Manage Books</a></li>
+                <li><a href="#">Log Out</a></li>
+            </ul>
+        </section>
+    </header>
+
+    <main>
+        <h1>Add a Book</h1>
+
+        <form class="addBookForm">
+            <label>Book Title</label>
+            <input type="text" />
+            <br/>
+
+            <label>Authors</label>
+            <input type="text" />
+            <br/>
+
+            <label>Genres</label>
+            <input type="text" />
+            <br/>
+
+            <label>Publisher</label>
+            <input type="text" />
+            <br/>
+
+            <label>Published in (Year)</label>
+            <input type="number" />
+            <br/>
+            
+            <label>ISBN number</label>
+            <input type="tex" />
+            <br/>
+
+            <label id="coverUrlLabel">Cover URL</label>
+            <textarea id="coverUrlInput"></textarea>
+            <img id="coverUrlImgInput" src="https://via.placeholder.com/200x300.png?text=Book+Cover" />
+            <!-- <img id="coverUrlImgInput" src="https://i.guim.co.uk/img/media/3cff9b49dc4f4902666c20a3b13d20e381bd3528/0_0_1464_2244/master/1464.jpg?width=140&dpr=2&s=none" /> -->
+            <br/>
+
+            <label>Abstract</label>
+            <textarea></textarea>
+            <br/>
+
+            <button type="submit" class="submit-btn">Add Book</button>
+        </form>
+    </main>
+
+    <footer class="footer">
+        &copy; 2023
+    </footer>
+</body>
+</html>
