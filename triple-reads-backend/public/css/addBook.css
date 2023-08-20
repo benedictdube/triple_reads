@@ -45,6 +45,11 @@ main textarea {
     flex: 2;
 }
 
+/* main input:invalid { */
+    /* border: var(--red-color) solid 1px; */
+    /* border: 2px dashed red; */
+/* } */
+
 .input-add {
     width: 85%;
     margin-top: 0px;
@@ -74,7 +79,11 @@ main textarea {
     background-color: var(--submit-btn-color);
     width: 101%;
     color: white;
-    border: var(--submit-btn-color) solid 1px;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: var(--submit-btn-color-hover);
 }
 
 .add-btn {
@@ -84,7 +93,6 @@ main textarea {
     margin-top: 0px;
     margin-bottom: 25px;
     margin-right: -15px;
-    cursor: pointer;
     
     float: right;
     align-self: flex-end;
@@ -99,7 +107,6 @@ main textarea {
     color: white;
     border: none;
     margin-right: -15px;
-    cursor: pointer;
     
     float: right;
     align-self: flex-end;

@@ -14,6 +14,7 @@
     --remove-btn-color: #FF5353;
     --remove-btn-color-hover: #fa0c0c;
     --submit-btn-color: #6694D9;
+    --submit-btn-color-hover: #387be0;
 
     /* header dropdown */
     --dropdown-bg-color: #F0F0F0;
@@ -36,7 +37,49 @@ body {
     font-size: 22px;
     padding: 16px;
     width: 120px;
+    cursor: pointer;
 }
+
+.required {
+    color: var(--red-color);
+}
+
+
+/* Styles for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+  
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+  
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+  
 
 @media screen and (max-width: 1200px) {
     .btn {

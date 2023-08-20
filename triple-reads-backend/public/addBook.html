@@ -36,22 +36,31 @@
     <main>
         <h1>Add a Book</h1>
 
+        <section id="successModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p id="successMessage" class="success-message">This is my message</p>
+            </div>
+        </section>
+          
+
+
         <form class="addBookForm" id="addBookForm">
             <section class="input-container">
-                <label>Book Title</label>
-                <input type="text" />
+                <label>Book Title <span class="required">*</span></label>
+                <input type="text" id="bookTitleInput" required title="Please enter a book title" />
             </section>
 
             <section class="input-container">
-                <label>Authors</label>
+                <label>Authors <span class="required">*</span></label>
                 <article id="authoursInput">
                     <input type="text" class="authorInput" />
                 </article>
                 <button type="button" id="addAuthor" class="btn add-btn">Add</button>
             </section>
-
+            
             <section class="input-container">
-                <label>Genres</label>
+                <label>Genres <span class="required">*</span></label>
                 <article id="genresInput">
                     <input type="text" class="genreInput" />
                 </article>
@@ -59,33 +68,32 @@
             </section>
 
             <section class="input-container">
-                <label>Publisher</label>
-                <input type="text" />
+                <label>Publisher <span class="required">*</span></label>
+                <input type="text" id="publisherInput" required="required" />
             </section> 
 
             <section class="input-container">
-                <label>Published in (Year)</label>
-                <input type="number" />
+                <label>Published in (Year) <span class="required">*</span></label>
+                <input type="number" id="publishedInput" required="required" />
             </section>
             
             <section class="input-container">
-                <label>ISBN number</label>
-                <input type="text" />
+                <label>ISBN number <span class="required">*</span></label>
+                <input type="text" id="IsbnInput" required="required" />
             </section>
 
             <section class="input-container">
-                <label id="coverUrlLabel">Cover URL</label>
-                <textarea id="coverUrlInput"></textarea>
+                <label id="coverUrlLabel">Cover URL <span class="required">*</span></label>
+                <textarea id="coverUrlInput" pattern="^(?:(?:https?|HTTPS?|ftp|FTP):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-zA-Z\u00a1-\uffff0-9]-*)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]-*)*[a-zA-Z\u00a1-\uffff0-9]+)*)(?::\d{2,})?(?:[\/?#]\S*)?$" required="required"></textarea>
                 <img id="coverUrlImgInput" src="https://via.placeholder.com/200x300.png?text=Book+Cover" />
-                <!-- <img id="coverUrlImgInput" src="https://i.guim.co.uk/img/media/3cff9b49dc4f4902666c20a3b13d20e381bd3528/0_0_1464_2244/master/1464.jpg?width=140&dpr=2&s=none" /> -->
             </section>
 
             <section class="input-container">
                 <label>Abstract</label>
-                <textarea></textarea>
+                <textarea id="abstractInput"></textarea>
             </section>
 
-            <button type="submit" class="btn submit-btn">Add Book</button>
+            <button type="submit" id="submitAddBookForm" class="btn submit-btn">Add Book</button>
         </form>
     </main>
 
