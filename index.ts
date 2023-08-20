@@ -11,13 +11,14 @@ const fusekiUrl = process.env.FUSEKI_URL || 'http://localhost:3030/triple-reads/
 app.use(express.json());
 
 app.get('/books', async (req: Request, res: Response) => {
+  console.log(`Received request on ${req.url}`)
   try {
     const query = `
       PREFIX schema: <http://schema.org/>
       PREFIX ex: <http://example.org/>
       SELECT ?title ?isbn ?datePublished ?abstract ?image ?authorName ?genreName ?publisher WHERE {
         ?book a schema:Book ;
-          schema:title ?title ;
+          schema:title ?title ; 
           schema:isbn ?isbn ;
           schema:datePublished ?datePublished ;
           schema:abstract ?abstract ;
@@ -56,6 +57,7 @@ app.get('/books', async (req: Request, res: Response) => {
 
 app.get('/books/:isbn', async (req: Request, res: Response) => {
   try {
+    console.log(`Received request on ${req.url}`)
     const query = `
       PREFIX schema: <http://schema.org/>
       PREFIX ex: <http://example.org/>
@@ -95,5 +97,5 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at $ {port}`);
+  console.log(`⚡️[server]: Server is running at ${'localhost:'+port} with DB on ${fusekiUrl}`);
 });
