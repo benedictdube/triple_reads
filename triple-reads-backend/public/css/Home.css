@@ -10,64 +10,56 @@ main h1 {
     padding-bottom: 20px;
 }
 
-#search_sec{
+#searchSection{
 	display: flex;
+	flex-direction: row;
 	align-items: center;
-	padding: 10px;
+	margin-bottom: 20px;
 }
 
-#search_sec form#search_bar{
-	width:70%;
-	margin:auto;
-}
-
-/* Style the search field */
-#search_sec form#search_bar input[type=text] {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid grey;
-  float: left;
-  width: 80%;
-  background: white;
-}
-
-/* Style the submit button */
-#search_sec form#search_bar button {
-  width: 15%;
-  padding: 10px;
-  background: #2196F3;
-  color: white;
-  font-size: 17px;
-  border: 1px solid grey;
-  border-left: none;
-  cursor: pointer;
-}
-
-%search_sec form#search_bar button:hover {
-	background: #0b7dda;
-}
-
-/* Clear floats */
-#search_sec form#search_bar::after {
-	content: "";
-	clear: both;
-	display: table;
-}
-
-/*the container must be positioned relative:*/
-#search_sec #custom-select {
-	background-color: DodgerBlue;
-	margin: auto; 
-}
-
-#search_sec #custom-select select {
-	font-size: 14px;
-	font-family: Cursive;
-	background-color: DodgerBlue;
+#customSelect {
+	flex: 1;
+	width: max-content;
+	font-size: 20px;
+	background-color: var(--submit-btn-color);
 	color: white;
 	border: none;
-	padding: 10px;
+	margin-right: 20px;
 }
+
+#searchForm{
+	width: 90%;
+	margin: auto;
+	display: flex;
+	background-color: var(--input-box-color);
+    border: var(--input-box-border-color) solid 1px;
+}
+
+#searchForm input[type=text] {
+	background-color: transparent;
+	border: 1px solid transparent;
+	width: 100%;
+    padding: 16px 8px;
+    font-size: 20px;
+    flex: 2;
+}
+
+#searchForm input[type=text]:focus,
+#searchForm input[type=text]:active,
+#searchForm input[type=text]:not(:focus) {
+	border: none;
+}
+
+#searchSection #searchForm button {
+	width: 20px;
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: inherit;
+	font-size: 20px;
+	cursor: pointer;
+	margin-right: 22px;
+}
+
 
 #book_grid {
 	display: grid;
@@ -88,4 +80,19 @@ main h1 {
 #book_grid #book_item h3{
 	margin: auto;
 	text-align: center;
+}
+
+@media screen and (max-width: 1200px) {
+	#searchSection{
+		flex-direction: column;
+	}
+
+	#customSelect {
+		width: 100% !important; 
+		margin: 0px;
+	}
+
+	#searchForm {
+		width: 100% !important;
+	}
 }
