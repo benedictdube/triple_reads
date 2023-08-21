@@ -27,6 +27,11 @@ main h1 {
 	margin-right: 20px;
 }
 
+#customSelect option {
+	background-color: var(--background-color);
+	color: black;
+}
+
 #searchForm{
 	width: 90%;
 	margin: auto;
