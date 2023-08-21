@@ -1,5 +1,6 @@
 function loadPage() {
     loadHeader();
+    loadFooter();
 }
 
 function loadHeader() {
