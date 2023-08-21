@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
 		const cell = document.createElement("article");
 		const cover = document.createElement("img");
-		const title = document.createElement("h3");
+		const title = document.createElement("h1");
 		const author = document.createElement("h3");	
 		
 		cell.id = "book_item";
