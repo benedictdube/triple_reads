@@ -7,6 +7,7 @@ interface Book {
     publisher: string;
     authors: string[];
     genres: string[];
+    adminEmail: string;
 }
 
 const searchResultDiv = document.getElementById('result') as HTMLDivElement;
@@ -65,6 +66,10 @@ function createSearchBookElement(book: Book) {
     const bookGenres = document.createElement('p');
     bookGenres.textContent = 'Genres: ' + book.genres.join(', ');
     bookDetails.appendChild(bookGenres);
+
+    const addedByAdmin = document.createElement('p');
+    addedByAdmin.textContent = 'Admin Email: ' + book.adminEmail;
+    bookDetails.appendChild(addedByAdmin);
 
     bookDiv.appendChild(bookDetails);
 

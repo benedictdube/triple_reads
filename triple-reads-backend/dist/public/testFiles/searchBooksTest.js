@@ -54,6 +54,9 @@ function createSearchBookElement(book) {
     const bookGenres = document.createElement('p');
     bookGenres.textContent = 'Genres: ' + book.genres.join(', ');
     bookDetails.appendChild(bookGenres);
+    const addedByAdmin = document.createElement('p');
+    addedByAdmin.textContent = 'Admin Email: ' + book.adminEmail;
+    bookDetails.appendChild(addedByAdmin);
     bookDiv.appendChild(bookDetails);
     bookDiv.appendChild(bookDetails);
     return bookDiv;

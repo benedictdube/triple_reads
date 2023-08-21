@@ -31,6 +31,7 @@ searchForBook.addEventListener('submit', async function(event) {
               <p><strong>Author:</strong> ${bookData.authorName.value}</p>
               <p><strong>Genre:</strong> ${bookData.genreName.value}</p>
               <p><strong>Publisher:</strong> ${bookData.publisher.value}</p>
+              <p><strong>Admin Email:</strong> ${bookData.adminEmail.value}</p>
               <img src="${bookData.image.value}" alt="Book Cover">
           `;
       } else {
