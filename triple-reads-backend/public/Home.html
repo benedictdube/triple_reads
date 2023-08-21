@@ -1,0 +1,58 @@
+<html>
+
+	<head>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Triple Reads</title>
+		<link rel="stylesheet" href="css/Home.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/header.css">
+		<link rel="stylesheet" href="css/footer.css">
+
+		<script src="js/header.ts"></script>
+		<script src="js/Home.ts"></script>
+	</head>
+	
+	<body>
+		<header class="header">
+			<section class="logo">
+				<img src="images/logo.png" />
+				<h1>TripleBooks</h1>
+			</section>
+
+			<section class="menu"> 
+				<button class="logged-btn" type="button">xyz@bbd.co.za</button>
+				<button id="dropdownButton">&#9660;</button>
+				<ul class="dropdown-content" id="dropdownContent">
+					<li><a href="#">Manage Books</a></li>
+					<li><a href="#">Log Out</a></li>
+				</ul>
+			</section>
+		</header>
+		
+		<main>
+			<section id="search_sec">
+				<section id="custom-select">
+					<select>
+						<option value="0">Search By</option>
+						<option value="1">Title</option>
+						<option value="2">Genre</option>
+						<option value="3">Year</option>
+						<option value="4">Author</option>
+					</select>
+				</section>
+				<form id="search_bar" action="action_page.php">
+					<input type="text" placeholder="Search.." name="search">
+					<button type="submit"><i class="fa fa-search"></i></button>
+				</form>
+			</section>
+			<section id="book_grid">
+			</section>
+		</main>
+		
+		<footer class="footer">
+        &copy; 2023
+		</footer>
+	</body>
+	
+</html>

@@ -1,0 +1,91 @@
+main {
+    padding: 1em 12em;
+}
+
+main h1 {
+    color: var(--heading-color);
+    font-size: 32px;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+#search_sec{
+	display: flex;
+	align-items: center;
+	padding: 10px;
+}
+
+#search_sec form#search_bar{
+	width:70%;
+	margin:auto;
+}
+
+/* Style the search field */
+#search_sec form#search_bar input[type=text] {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+/* Style the submit button */
+#search_sec form#search_bar button {
+  width: 15%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+%search_sec form#search_bar button:hover {
+	background: #0b7dda;
+}
+
+/* Clear floats */
+#search_sec form#search_bar::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+/*the container must be positioned relative:*/
+#search_sec #custom-select {
+	background-color: DodgerBlue;
+	margin: auto; 
+}
+
+#search_sec #custom-select select {
+	font-size: 14px;
+	font-family: Cursive;
+	background-color: DodgerBlue;
+	color: white;
+	border: none;
+	padding: 10px;
+}
+
+#book_grid {
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+	margin: auto;
+}
+
+#book_grid #book_item{
+	margin: auto;
+}
+
+#book_grid #book_item #cover{
+	width: 140px;
+	height: 160px;
+	padding: 10px;
+}
+
+#book_grid #book_item h3{
+	margin: auto;
+	text-align: center;
+}
