@@ -1,7 +1,6 @@
 main {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
 }
 
 .left-section {
@@ -22,8 +21,12 @@ main {
 
 .bookTitle, 
 .authors {
-    color: #434343;
-    /* var(--heading-color) */
+    color: var(--heading-color);
+    font-weight: normal;
+}
+
+.bookTitle {
+    font-weight: bold;
 }
 
 hr {
@@ -34,8 +37,7 @@ hr {
 .genres,
 .publishInfo, 
 .abstract {
-    color: #575757;
-    /* var(--sub-heading-color); */
+    color: var(--sub-heading-color); 
     font-size: 16px;
 }
 
@@ -47,4 +49,13 @@ hr {
 .authors {
     margin: 10px 0px;
     font-size: 22px;
+}
+
+.btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.delete-btn {
+    margin-right: 0px;
 }
