@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.footer {
+    flex-shrink: 0;
+
+    background-color: var(--footer-bg-color);
+    padding: 12px 0px;
+    text-align: center;
+    color: var(--footer-color);
+    
+    display: block;
+    position: sticky;
+    bottom: 0;
+}
