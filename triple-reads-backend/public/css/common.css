@@ -40,8 +40,38 @@ body {
     cursor: pointer;
 }
 
+.delete-btn {
+    background-color: var(--remove-btn-color);
+    color: white;
+    border: none;
+    margin-right: -15px;
+    
+    float: right;
+    align-self: flex-end;
+}
+
+.delete-btn:hover {
+    background-color: var(--remove-btn-color-hover);
+}
+
+.submit-btn {
+    margin: 10px 0px;
+    background-color: var(--submit-btn-color);
+    width: 101%;
+    color: white;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: var(--submit-btn-color-hover);
+}
+
 .required {
     color: var(--red-color);
+}
+
+main {
+    padding: 1em 12em;
 }
 
 
