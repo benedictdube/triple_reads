@@ -1,0 +1,119 @@
+:root {
+    --background-color: #F5F5F5;
+    --red-color: #FF5C5C;
+    
+    --heading-color: #434343;
+    --sub-heading-color: #575757;
+    
+    --input-box-color: #F9F9F9;
+    --input-box-border-color: #000000;
+
+    /* buttons */
+    --add-btn-color: #4EE779;
+    --add-btn-color-hover: #19e351;
+    --remove-btn-color: #FF5353;
+    --remove-btn-color-hover: #fa0c0c;
+    --submit-btn-color: #6694D9;
+    --submit-btn-color-hover: #387be0;
+
+    /* header dropdown */
+    --dropdown-bg-color: #F0F0F0;
+    --dropdown-border: #000000;
+    --dropdown-bg-color-hover: #f5f5f5; 
+
+    /* footer color */
+    --footer-bg-color: #D6D6D6;
+    --footer-color: #0C0C0C;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--background-color);
+}
+
+.btn {
+    font-size: 22px;
+    padding: 16px;
+    width: 120px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: var(--remove-btn-color);
+    color: white;
+    border: none;
+    margin-right: -15px;
+    
+    float: right;
+    align-self: flex-end;
+}
+
+.delete-btn:hover {
+    background-color: var(--remove-btn-color-hover);
+}
+
+.submit-btn {
+    margin: 10px 0px;
+    background-color: var(--submit-btn-color);
+    width: 101%;
+    color: white;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: var(--submit-btn-color-hover);
+}
+
+.required {
+    color: var(--red-color);
+}
+
+main {
+    padding: 1em 12em;
+}
+
+
+/* Styles for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+  
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+  
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+  
+
+@media screen and (max-width: 1200px) {
+    .btn {
+        width: 105% !important;
+        float: left;
+    }
+}

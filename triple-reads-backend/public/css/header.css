@@ -1,0 +1,86 @@
+.header {
+    padding: 1em 12em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+    margin-right: -5px;
+}
+
+.logo h1 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.menu {
+    position: relative;
+    /* display: inline-block; */
+}
+
+.login-btn {
+    color: var(--red-color);
+    background-color: transparent;
+    border: var(--red-color) 3px solid;
+    border-radius: 8px;
+    padding: 8px 16px; 
+    font-size: 1rem;
+    cursor: pointer; 
+}
+
+.login-btn:hover {
+    color: white;
+    background-color: var(--red-color);
+}
+
+.logged-btn {
+    color: var(--red-color);
+    background-color: transparent;
+    border: none;
+    font-size: 1rem; 
+}
+
+#dropdownButton {
+    color: var(--red-color);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: -4px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--dropdown-bg-color);
+    border: var(--dropdown-border) solid 1px;
+    min-width: 140px;
+    z-index: 1;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content a {
+    color: var(--sub-heading-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--dropdown-bg-color-hover);
+    color: var(--dropdown-border);
+}
+
+.show {
+    display: block;
+}
