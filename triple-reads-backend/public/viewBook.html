@@ -13,24 +13,10 @@
     <link rel="stylesheet" href="css/viewBooks.css">
 
     <script src="js/header.js"></script>
-
+    <script src="js/footer.js"></script>
 </head>
-<body>
-    <header class="header">
-        <section class="logo">
-            <img src="images/logo.png" />
-            <h1>TripleBooks</h1>
-        </section>
-
-        <section class="menu"> 
-            <button class="logged-btn" type="button">xyz@bbd.co.za</button>
-            <button id="dropdownButton">&#9660;</button>
-            <ul class="dropdown-content" id="dropdownContent">
-                <li><a href="#">Manage Books</a></li>
-                <li><a href="#">Log Out</a></li>
-            </ul>
-        </section>
-    </header>
+<body onload="loadPage()">
+    <header id="header"></header>
 
     <main>
         <section class="left-section">
@@ -51,8 +37,6 @@
         </section>
     </main>
 
-    <footer class="footer">
-        &copy; 2023
-    </footer>
+    <footer id="footer"></footer>
 </body>
 </html>
