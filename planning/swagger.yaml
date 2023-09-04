@@ -1,0 +1,163 @@
+swagger: "2.0"
+info:
+  title: Triple Books
+  version: 1.0.0
+host: localhost
+schemes:
+  - http
+tags:
+  - name: book
+    description: Books
+paths:
+  /search:
+    get:
+      summary: Search for books
+      operationId: searchBook
+      tags:
+        - book
+      parameters:
+        - in: query
+          name: title
+          description: Book title to search for
+          required: false
+          type: string
+          
+        - in: query
+          name: author
+          description: Author name to search for
+          required: false
+          type: string
+          
+        - in: query
+          name: genre
+          description: Genre to search for
+          required: false 
+          type: string
+
+        - in: query
+          name: publishedYear
+          description: Published year to search for
+          required: false
+          type: string
+          
+        - in: query
+          name: publisher
+          description: Publisher to search for
+          required: false
+          type: string
+
+        - in: query
+          name: isbn
+          description: ISBN number to search for
+          required: false
+          type: string
+          
+        - in: query
+          name: abstract
+          description: Abstract to search for
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Book'
+              
+  /book:
+    post:
+      summary: Add a new book
+      operationId: addBook
+      tags:
+        - book
+      parameters:
+        - in: body
+          name: book
+          description: Book details
+          required: true
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        '201':
+          description: Book added successfully
+        '400':
+          description: Bad request
+        
+  /book/{title}:
+    put:
+      summary: Update a book based on title
+      operationId: updateBook
+      tags:
+        - book
+      parameters:
+        - in: path
+          name: title
+          description: Book title to update
+          required: true
+          type: string
+        - in: body
+          name: book
+          description: Updated book details
+          required: true
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        '200':
+          description: Book updated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Book not found
+        
+    delete:
+      summary: Delete a book based on title
+      operationId: deleteBook
+      tags:
+        - book
+      parameters:
+        - in: path
+          name: title
+          description: Book title to delete
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Book deleted successfully
+        '404':
+          description: Book not found
+  
+  /deleteAll:
+    delete:
+      summary: Delete all records
+      operationId: deleteAllRecords
+      tags:
+        - book
+      responses:
+        '204':
+          description: All records deleted successfully
+        '500':
+          description: Server error  
+        
+definitions:
+  Book:
+    type: object
+    properties:
+      name: 
+        type: string 
+      authors: 
+        type: array
+        items:
+          type: string 
+      genres: 
+        type: array
+        items:
+          type: string 
+      publishedYear:
+        type: string
+      publisher:
+        type: string
+      isbn:
+        type: string
+      abstract:
+        type: string
