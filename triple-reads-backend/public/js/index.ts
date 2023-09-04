@@ -1,33 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
-	const grid = document.getElementById("book_grid");
+	const grid = document.getElementById("book_grid") as HTMLElement;
 	
 	let book_data = [{
-	image_link: "book-covers-big.jpg",
+	image_link: "https://via.placeholder.com/200x300.png?text=Book+Cover",
 	title: "Book1",
 	author: "Author1"
 	},
 	{
-	image_link: "book-covers-big.jpg",
+	image_link: "https://via.placeholder.com/200x300.png?text=Book+Cover",
 	title: "Book2",
 	author: "Author2"
 	},
 	{
-	image_link: "book-covers-big.jpg",
+	image_link: "https://via.placeholder.com/200x300.png?text=Book+Cover",
 	title: "Book3",
 	author: "Author3"
 	},
 	{
-	image_link: "book-covers-big.jpg",
+	image_link: "https://via.placeholder.com/200x300.png?text=Book+Cover",
 	title: "Book4",
 	author: "Author4"
 	},
 	{
-	image_link: "book-covers-big.jpg",
+	image_link: "https://via.placeholder.com/200x300.png?text=Book+Cover",
 	title: "Book5",
 	author: "Author5"
 	},
 	{
-	image_link: "book-covers-big.jpg",
+	image_link: "https://via.placeholder.com/200x300.png?text=Book+Cover",
 	title: "Book6",
 	author: "Author6"
 	}
