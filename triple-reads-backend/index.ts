@@ -218,6 +218,7 @@ export async function searchBooks(req: Request, res: Response) {
     const publisher = req.query.publishedYear as string;
     const isbn = req.query.isbn as string;
     const abstract = req.query.abstract as string;
+    const admin = req.query.admin as string;
 
     const allBooks = await getAllBooks();
 
@@ -229,6 +230,7 @@ export async function searchBooks(req: Request, res: Response) {
       (!publishedYear || book.publishedYear === publishedYear) &&
       (!publisher || book.publisher.toLowerCase().includes(publisher.toLowerCase())) &&
       (!isbn || book.isbn === isbn) &&
+      (!admin || book.adminEmail == admin) &&
 
       // abstract means search in all fields
       ((!abstract || book.abstract.toLowerCase().includes(abstract.toLowerCase())) ||

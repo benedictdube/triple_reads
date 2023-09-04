@@ -57,6 +57,12 @@ paths:
           description: Abstract to search for
           required: false
           type: string
+          
+        - in: query
+          name: admin
+          description: Admin who added the book
+          required: false 
+          type: string 
       responses:
         '200':
           description: Successful response
@@ -161,3 +167,12 @@ definitions:
         type: string
       abstract:
         type: string
+      image: 
+        type: string
+      addedby: 
+        type: string
+      dateAdded:
+        type: string 
+      
+      
+  
