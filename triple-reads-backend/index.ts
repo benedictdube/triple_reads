@@ -9,6 +9,7 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 const fusekiUrl = process.env.FUSEKI_URL || 'http://localhost:3030/triple-reads/sparql';
 const fusekiUrlUpdate = process.env.FUSEKI_URL_UPDATE || 'http://localhost:3030/triple-reads/update';
+const fusekiBaseUrl = process.env.FUSEKI_BASE_URL || 'http://localhost:3030/triple-reads';
 
 
 app.use(express.static('public'));
@@ -212,7 +213,7 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
 });
 
 //POST TO INSERT
-app.post('/books', async (req: Request, res: Response) => {
+app.post('/book', async (req: Request, res: Response) => {
   try {
     const { title, isbn, datePublished, abstract, image, authorNames, genreNames, publisher, admin, dateAdded } = req.body;
 
@@ -266,7 +267,7 @@ app.post('/books', async (req: Request, res: Response) => {
       addGenre(genreQuery);
     }
 
-
+    const currentDate = new Date();
 
     const bookQuery = `
       PREFIX schema: <http://schema.org/>
@@ -280,7 +281,7 @@ app.post('/books', async (req: Request, res: Response) => {
           schema:abstract "${abstract}" ;
           schema:image "${image}" ;
           ex:addedBy ex:${adminString} ;
-          schema:dateAdded "${dateAdded}" ;
+          schema:dateAdded "${currentDate}" ;
           ${authorString}
           ${genreString}
           schema:publisher "${publisher}" .
@@ -300,7 +301,7 @@ app.post('/books', async (req: Request, res: Response) => {
   }
 });
 
-app.delete('/books/:isbn', async (req, res) => {
+app.delete('/book/:isbn', async (req, res) => {
   try {
     const isbnToDelete = req.params.isbn;
 

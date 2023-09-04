@@ -24,7 +24,7 @@ bookForm.addEventListener('submit', async (event) => {
     };    
 
     try {
-        const response = await fetch('/books', {
+        const response = await fetch('/book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

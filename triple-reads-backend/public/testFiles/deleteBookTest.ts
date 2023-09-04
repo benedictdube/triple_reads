@@ -7,7 +7,7 @@ deleteBookForm.addEventListener('submit', async function (event) {
     const isbn = document.getElementById('isbn') as HTMLInputElement;    
 
     try {
-        const response = await fetch(`/books/${isbn.value}`, {
+        const response = await fetch(`/book/${isbn.value}`, {
             method: 'DELETE',
         });
 
