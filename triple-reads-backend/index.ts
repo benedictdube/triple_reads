@@ -302,9 +302,31 @@ app.post('/books', async (req: Request, res: Response) => {
 
 app.delete('/books/:isbn', async (req, res) => {
   try {
-    const isbnToDelete = req.params.isbn;  
+    const isbnToDelete = req.params.isbn;
 
-    const query = `
+    const checkQuery = `
+      PREFIX schema: <http://schema.org/>
+      PREFIX ex: <http://example.org/>
+
+      ASK WHERE {
+        ?book a schema:Book ;
+          schema:isbn "${isbnToDelete}" .
+      }
+    `;
+
+    const { data } = await axios.post(fusekiUrl, null, {
+      params: {
+        query: checkQuery,
+      },
+    });
+
+    const exists = data.boolean;
+
+    if (!exists) {      
+      return res.status(404).json({ error: 'Book not found' });
+    }
+
+    const deleteQuery = `
       PREFIX schema: <http://schema.org/>
       PREFIX ex: <http://example.org/>
 
@@ -313,11 +335,11 @@ app.delete('/books/:isbn', async (req, res) => {
           schema:isbn "${isbnToDelete}" ;
           ?p ?o .
       }
-    `;   
+    `;
 
     await axios.post(fusekiUrlUpdate, null, {
       params: {
-        update: query,
+        update: deleteQuery,
       },
     });
 
@@ -327,6 +349,7 @@ app.delete('/books/:isbn', async (req, res) => {
     res.status(500).json({ error: 'Error deleting book' });
   }
 });
+
 
 
 async function addAuthor(authorQuery: string): Promise<void> {
