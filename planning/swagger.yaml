@@ -90,16 +90,16 @@ paths:
         '400':
           description: Bad request
         
-  /book/{title}:
+  /book/{isbn}:
     put:
-      summary: Update a book based on title
+      summary: Update a book based on isbn
       operationId: updateBook
       tags:
         - book
       parameters:
         - in: path
-          name: title
-          description: Book title to update
+          name: isbn
+          description: Book isbn to update
           required: true
           type: string
         - in: body
@@ -117,14 +117,14 @@ paths:
           description: Book not found
         
     delete:
-      summary: Delete a book based on title
+      summary: Delete a book based on the isbn
       operationId: deleteBook
       tags:
         - book
       parameters:
         - in: path
-          name: title
-          description: Book title to delete
+          name: isbn
+          description: Book isbn to delete
           required: true
           type: string
       responses:
@@ -173,6 +173,3 @@ definitions:
         type: string
       dateAdded:
         type: string 
-      
-      
-  
