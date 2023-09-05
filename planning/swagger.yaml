@@ -59,7 +59,7 @@ paths:
           type: string
           
         - in: query
-          name: admin
+          name: adminEmail
           description: Admin who added the book
           required: false 
           type: string 
@@ -169,7 +169,7 @@ definitions:
         type: string
       image: 
         type: string
-      addedby: 
+      adminEmail: 
         type: string
       dateAdded:
         type: string 
