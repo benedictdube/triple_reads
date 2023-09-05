@@ -7,10 +7,9 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
-const fusekiUrl = process.env.FUSEKI_URL || 'http://localhost:3030/triple-reads/sparql';
-const fusekiUrlUpdate = process.env.FUSEKI_URL_UPDATE || 'http://localhost:3030/triple-reads/update';
 const fusekiBaseUrl = process.env.FUSEKI_BASE_URL || 'http://localhost:3030/triple-reads';
-
+const fusekiUrl = process.env.FUSEKI_URL || fusekiBaseUrl + '/sparql';
+const fusekiUrlUpdate = process.env.FUSEKI_URL_UPDATE || fusekiBaseUrl + '/update';
 
 app.use(express.static('public'));
 app.use(express.static('dist/public'));
@@ -55,9 +54,6 @@ async function getAllBooks() {
       query,
     },
   });
-
-  console.log(response.data.results.bindings);
-
 
   const booksMap = new Map<string, Book>();
   response.data.results.bindings.forEach((bookBinding: any) => {
@@ -221,19 +217,41 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
 //POST TO INSERT
 app.post('/book', async (req: Request, res: Response) => {
   try {
-    const { title, isbn, datePublished, abstract, image, authorNames, genreNames, publisher, admin, dateAdded } = req.body;
+    const { title, isbn, datePublished, abstract, image, authors, genres, publisher, admin } = req.body;
+
+    const checkQuery = `
+      PREFIX schema: <http://schema.org/>
+      PREFIX ex: <http://example.org/>
+
+      ASK WHERE {
+        ?book a schema:Book ;
+          schema:isbn "${isbn}" .
+      }
+    `;
+
+    const { data } = await axios.post(fusekiUrl, null, {
+      params: {
+        query: checkQuery,
+      },
+    });
+
+    const exists = data.boolean;
+
+    if (exists) {
+      return res.status(404).json({ error: 'Book already exists with that isbn' });
+    }
 
     const adminString = await getAdminID(admin);
 
     let authorString = "schema:author";
 
-    for (let i = 0; i < authorNames.length; i++) {
+    for (let i = 0; i < authors.length; i++) {
 
-      if (i !== authorNames.length - 1) {
-        authorString += " ex:" + authorNames[i].replace(/\s+/g, '_') + ",";
+      if (i !== authors.length - 1) {
+        authorString += " ex:" + authors[i].replace(/\s+/g, '_') + ",";
       }
       else {
-        authorString += " ex:" + authorNames[i].replace(/\s+/g, '_') + " ;";
+        authorString += " ex:" + authors[i].replace(/\s+/g, '_') + " ;";
       }
 
       const authorQuery = `
@@ -241,8 +259,8 @@ app.post('/book', async (req: Request, res: Response) => {
         PREFIX ex: <http://example.org/>
 
         INSERT DATA {
-          ex:${authorNames[i].replace(/\s+/g, '_')} a schema:Person ;
-            schema:name "${authorNames[i]}" .
+          ex:${authors[i].replace(/\s+/g, '_')} a schema:Person ;
+            schema:name "${authors[i]}" .
         }
       `;
 
@@ -251,13 +269,13 @@ app.post('/book', async (req: Request, res: Response) => {
 
     let genreString = "schema:genre";
 
-    for (let i = 0; i < genreNames.length; i++) {
+    for (let i = 0; i < genres.length; i++) {
 
-      if (i !== genreNames.length - 1) {
-        genreString += " ex:" + genreNames[i].replace(/\s+/g, '_') + ",";
+      if (i !== genres.length - 1) {
+        genreString += " ex:" + genres[i].replace(/\s+/g, '_') + ",";
       }
       else {
-        genreString += " ex:" + genreNames[i].replace(/\s+/g, '_') + " ;";
+        genreString += " ex:" + genres[i].replace(/\s+/g, '_') + " ;";
       }
 
       const genreQuery = `
@@ -265,8 +283,8 @@ app.post('/book', async (req: Request, res: Response) => {
         PREFIX ex: <http://example.org/>
 
         INSERT DATA {
-          ex:${genreNames[i].replace(/\s+/g, '_')} a ex:Genre ;
-            schema:name "${genreNames[i]}" .
+          ex:${genres[i].replace(/\s+/g, '_')} a ex:Genre ;
+            schema:name "${genres[i]}" .
         }
       `;
 
@@ -356,8 +374,6 @@ app.delete('/book/:isbn', async (req, res) => {
     res.status(500).json({ error: 'Error deleting book' });
   }
 });
-
-
 
 async function addAuthor(authorQuery: string): Promise<void> {
   await axios.post(fusekiUrlUpdate, null, {

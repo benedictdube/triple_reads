@@ -5,19 +5,18 @@ bookForm.addEventListener('submit', async (event) => {
     const formData = new FormData(bookForm);
 
     const authorsInput = formData.get('authors');
-    const authorNames = authorsInput ? (authorsInput as string).split(',').map(author => author.trim()) : [];
+    const authors = authorsInput ? (authorsInput as string).split(',').map(author => author.trim()) : [];
 
     const genresInput = formData.get('genres');
-    const genreNames = genresInput ? (genresInput as string).split(',').map(genre => genre.trim()) : [];
+    const genres = genresInput ? (genresInput as string).split(',').map(genre => genre.trim()) : [];
 
     const requestBody = {
         title: formData.get('title'),
         isbn: formData.get('isbn'),
-        datePublished: formData.get('datePublished'),
         abstract: formData.get('abstract'),
         image: formData.get('image'),
-        authorNames,
-        genreNames,
+        authors,
+        genres,
         publisher: formData.get('publisher'),
         admin: formData.get('admin'),
         dateAdded: new Date().toISOString(),
