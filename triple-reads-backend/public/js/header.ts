@@ -58,12 +58,11 @@ function loadHeader() {
         });
         menu_section.appendChild(ul);
         
+        //const dropdownButton = document.getElementById("dropdownButton") as HTMLButtonElement;
+        //const dropdownContent = document.getElementById("dropdownContent") as HTMLElement;
 
-        const dropdownButton = document.getElementById("dropdownButton") as HTMLButtonElement;
-        const dropdownContent = document.getElementById("dropdownContent") as HTMLElement;
-
-        dropdownButton.addEventListener("click", function () {
-            dropdownContent.classList.toggle("show");
+        dropdown_btn.addEventListener("click", function () {
+            ul.classList.toggle("show");
         });
 
         // Close the dropdown if the user clicks outside of it
@@ -71,8 +70,8 @@ function loadHeader() {
             const targetElement = event.target as Element;
 
             if (!targetElement.matches("#dropdownButton")) {
-                if (dropdownContent.classList.contains("show")) {
-                    dropdownContent.classList.remove("show");
+                if (ul.classList.contains("show")) {
+                    ul.classList.remove("show");
                 }
             }
         });

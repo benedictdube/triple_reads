@@ -1,6 +1,60 @@
 const bookCover = "https://via.placeholder.com/200x300.png?text=Book+Cover";
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Get the modal and close button
+    const modal = document.getElementById("successModal") as HTMLElement;
+    const closeButton = document.querySelector(".close") as HTMLSpanElement;
+
+    // Function to show the modal with a success message
+    function showSuccessPopup(message: string, showButton: boolean) {
+        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
+        successMessage.textContent = message;
+        modal.style.display = "block";
+
+        const popupBtn = document.getElementById("modelBtn") as HTMLButtonElement;
+        if (showButton) {
+            popupBtn.style.display = "initial";
+            popupBtn.addEventListener("click", () => {
+                window.location.href = "index.html";
+            });
+
+            closeButton.addEventListener("click", () => {
+                window.location.href = "index.html";
+            });
+        }
+        else {
+            popupBtn.style.display = "none";
+
+            // Close the modal when the close button is clicked
+            closeButton.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+            
+            // Close the modal when clicking outside the modal content
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
+    }
+
+    if (localStorage.getItem("email")) {
+        // User is logged in, show the "Add Book" page
+        const addBookPage = document.getElementById('addBookForm');
+        if (addBookPage) {
+            addBookPage.style.display = 'block';
+        }
+    } else {
+        // User is not logged in, optionally show a message or redirect to the login page
+        const loginMessage = document.getElementById('successModal');
+        if (loginMessage) {
+            loginMessage.style.display = 'block';
+            showSuccessPopup("You are not logged in", true);
+        }
+    }
+
+
     const form = document.getElementById("addBookForm") as HTMLElement;
     const bookTitleInput = document.getElementById("bookTitleInput") as HTMLInputElement;
     let inputAuthorBoxes = (document.getElementById("authoursInput") as HTMLElement)?.querySelectorAll(".authorInput");
@@ -10,28 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const IsbnInput = document.getElementById("IsbnInput") as HTMLInputElement;
     const coverUrlInput = document.getElementById("coverUrlInput") as HTMLInputElement; 
 
-    // Get the modal and close button
-    const modal = document.getElementById("successModal") as HTMLElement;
-    const closeButton = document.querySelector(".close") as HTMLSpanElement;
-
-    // Function to show the modal with a success message
-    function showSuccessPopup(message: string) {
-        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
-        successMessage.textContent = message;
-        modal.style.display = "block";
-    }
-
-    // Close the modal when the close button is clicked
-    closeButton.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
     
-    // Close the modal when clicking outside the modal content
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
 
 
     function createInputAuthorBox() {
@@ -155,12 +188,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const addedBook = addBook(bookTitle, authors, genres, publisher, published, isbn, coverUrl, abstract);
         if (addedBook) {
             // show success message
-            showSuccessPopup("Book added successfully!");
+            showSuccessPopup("Book added successfully!", false);
             // TODO: redirect to view full page
         }
         else {
             // show failure
-            showSuccessPopup("Book failed to add!");
+            showSuccessPopup("Book failed to add!", false);
 
         }
     }

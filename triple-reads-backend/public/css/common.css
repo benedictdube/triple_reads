@@ -95,6 +95,13 @@ main {
     max-width: 400px;
     text-align: center;
 }
+
+#modelBtn {
+    font-size: 18px !important;
+    float: none !important;
+    width: 40%;
+    padding: 2px !important;
+}
   
 .close {
     color: #aaa;
@@ -115,5 +122,10 @@ main {
     .btn {
         width: 105% !important;
         float: left;
+    }
+
+    #modelBtn {
+        width: 40% !important;
+        float: none;
     }
 }

@@ -1,3 +1,11 @@
+#addBookForm {
+    display: none;
+}
+
+#successModel {
+    display: none;
+}
+
 main h1 {
     color: var(--heading-color);
     font-size: 32px;
