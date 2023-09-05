@@ -31,35 +31,39 @@ interface Book {
 
 async function getAllBooks() {
   const query = `
-      PREFIX schema: <http://schema.org/>
-      PREFIX ex: <http://example.org/>
-      SELECT DISTINCT ?title ?isbn ?publishedYear ?abstract ?image ?authorName ?genreName ?publisher WHERE {
-        ?book a schema:Book ;
-          schema:title ?title ;
-          schema:isbn ?isbn ;
-          schema:publishedYear ?publishedYear ;
-          schema:abstract ?abstract ;
-          schema:image ?image ;
-          schema:author ?author ;
-          schema:genre ?genre ;
-          schema:publisher ?publisher .
-        ?author schema:name ?authorName .
-        ?genre schema:name ?genreName .
-      }
-    `;
-
+    PREFIX schema: <http://schema.org/>
+    PREFIX ex: <http://example.org/>
+    
+    SELECT DISTINCT ?title ?isbn ?publishedYear ?abstract ?image ?authorName ?genreName ?publisher ?adminEmail WHERE {
+      ?book a schema:Book ;
+        schema:title ?title ;
+        schema:isbn ?isbn ;
+        schema:publishedYear ?publishedYear ;
+        schema:abstract ?abstract ;
+        schema:image ?image ;
+        schema:author ?author ;
+        schema:genre ?genre ;
+        schema:publisher ?publisher ;
+        ex:addedBy ?admin .
+      ?author schema:name ?authorName .
+      ?genre schema:name ?genreName .
+      ?admin ex:hasEmail ?adminEmail .
+    }
+  `;
   const response = await axios.get(fusekiUrl, {
     params: {
       query,
     },
   });
 
-  const booksMap = new Map<string, Book>();
+  console.log(response.data.results.bindings);
 
+
+  const booksMap = new Map<string, Book>();
   response.data.results.bindings.forEach((bookBinding: any) => {
     const isbn = bookBinding.isbn.value;
-
     if (!booksMap.has(isbn)) {
+
       const bookData: Book = {
         title: bookBinding.title.value,
         isbn: isbn,
@@ -71,10 +75,8 @@ async function getAllBooks() {
         genres: [],
         adminEmail: bookBinding.adminEmail.value
       };
-
       booksMap.set(isbn, bookData);
     }
-
     const bookData = booksMap.get(isbn)!;
     if (!bookData.authors.includes(bookBinding.authorName.value)) {
       bookData.authors.push(bookBinding.authorName.value);
@@ -83,7 +85,6 @@ async function getAllBooks() {
       bookData.genres.push(bookBinding.genreName.value);
     }
   });
-
   const booksData = Array.from(booksMap.values());
   return booksData;
 }
@@ -282,7 +283,7 @@ app.post('/book', async (req: Request, res: Response) => {
         ex:${isbn} a schema:Book ;
           schema:title "${title}" ;
           schema:isbn "${isbn}" ;
-          schema:datePublished "${datePublished}" ;
+          schema:publishedYear "${datePublished}" ;
           schema:abstract "${abstract}" ;
           schema:image "${image}" ;
           ex:addedBy ex:${adminString} ;
@@ -420,8 +421,8 @@ async function getAdminID(adminEmail: string): Promise<string> {
 export async function searchBooks(req: Request, res: Response) {
   try {
     const title = req.query.title as string;
-    const author = req.query.author as string;
-    const genre = req.query.genre as string;
+    const author = req.query.authors as string;
+    const genre = req.query.genres as string;
     const publishedYear = req.query.publishedYear as string;
     const publisher = req.query.publishedYear as string;
     const isbn = req.query.isbn as string;
