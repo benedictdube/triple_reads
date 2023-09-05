@@ -1,7 +1,7 @@
 interface Book {
     title: string;
     isbn: string;
-    datePublished: string;
+    publishedYear: string;
     abstract: string;
     image: string;
     publisher: string;
@@ -44,7 +44,7 @@ interface Book {
     bookDetails.appendChild(bookIsbn);
   
     const bookDatePublished = document.createElement('p');
-    bookDatePublished.textContent = 'Date Published: ' + book.datePublished;
+    bookDatePublished.textContent = 'Date Published: ' + book.publishedYear;
     bookDetails.appendChild(bookDatePublished);
   
     const bookAbstract = document.createElement('p');
