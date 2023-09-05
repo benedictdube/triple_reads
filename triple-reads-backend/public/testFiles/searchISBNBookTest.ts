@@ -1,7 +1,7 @@
 interface Book {
   title: string;
   isbn: string;
-  datePublished: string;
+  publishedYear: string;
   abstract: string;
   image: string;
   publisher: string;
@@ -26,11 +26,12 @@ searchForBook.addEventListener('submit', async function(event) {
           bookDetails.innerHTML = `
               <h2>${bookData.title.value}</h2>
               <p><strong>ISBN:</strong> ${bookData.isbn.value}</p>
-              <p><strong>Date Published:</strong> ${bookData.datePublished.value}</p>
+              <p><strong>Year Published:</strong> ${bookData.publishedYear.value}</p>
               <p><strong>Abstract:</strong> ${bookData.abstract.value}</p>
               <p><strong>Author:</strong> ${bookData.authorName.value}</p>
               <p><strong>Genre:</strong> ${bookData.genreName.value}</p>
               <p><strong>Publisher:</strong> ${bookData.publisher.value}</p>
+              <p><strong>Admin Email:</strong> ${bookData.adminEmail.value}</p>
               <img src="${bookData.image.value}" alt="Book Cover">
           `;
       } else {
