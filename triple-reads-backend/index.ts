@@ -112,7 +112,7 @@ app.get('/books/search/:title', async (req: Request, res: Response) => {
     const query = `
       PREFIX schema: <http://schema.org/>
       PREFIX ex: <http://example.org/>
-      SELECT DISTINCT ?title ?isbn ?publishedYear ?abstract ?image ?authorName ?genreName ?publisher WHERE {
+      SELECT DISTINCT ?title ?isbn ?publishedYear ?abstract ?image ?authorName ?genreName ?publisher ?adminEmail WHERE {
         ?book a schema:Book ;
           schema:title ?title ;
           schema:isbn ?isbn ;
@@ -183,7 +183,7 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
       PREFIX schema: <http://schema.org/>
       PREFIX ex: <http://example.org/>
 
-      SELECT ?title ?isbn ?publishedYear ?abstract ?image ?authorName ?genreName ?publisher WHERE {
+        SELECT DISTINCT ?title ?isbn ?publishedYear ?abstract ?image ?authorName ?genreName ?publisher ?adminEmail WHERE {
           ?book a schema:Book ;
             schema:title ?title ;
             schema:isbn ?isbn ;
@@ -196,6 +196,7 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
           ?author schema:name ?authorName .
           ?genre schema:name ?genreName .
           ?admin ex:hasEmail ?adminEmail .
+
           FILTER (?isbn = "${req.params.isbn}")
       }
     `;
@@ -206,15 +207,46 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
       },
     });
 
-    const bookData = response.data.results.bindings[0];
-    if (bookData) {
-      res.json(bookData);
-    } else {
-      res.status(404).json({ error: 'Book not found' });
-    }
+    const booksMap = new Map<string, Book>();
+
+    response.data.results.bindings.forEach((bookBinding: any) => {
+      const isbn = bookBinding.isbn.value;
+
+      console.log();
+      
+
+      if (!booksMap.has(isbn)) {
+        const bookData: Book = {
+          title: bookBinding.title.value,
+          isbn: isbn,
+          publishedYear: bookBinding.publishedYear.value,
+          abstract: bookBinding.abstract.value,
+          image: bookBinding.image.value,
+          publisher: bookBinding.publisher.value,
+          authors: [],
+          genres: [],
+          adminEmail: bookBinding.adminEmail.value
+        };
+
+        booksMap.set(isbn, bookData);
+      }
+
+      // Add author and genre names to the existing book data
+      const bookData = booksMap.get(isbn)!;
+      if (!bookData.authors.includes(bookBinding.authorName.value)) {
+        bookData.authors.push(bookBinding.authorName.value);
+      }
+      if (!bookData.genres.includes(bookBinding.genreName.value)) {
+        bookData.genres.push(bookBinding.genreName.value);
+      }
+    });
+
+    const booksData = Array.from(booksMap.values());
+
+    res.json(booksData);
   } catch (error) {
-    console.error('Error retrieving book:', error);
-    res.status(500).json({ error: 'Error retrieving book' });
+    console.error('Error retrieving books:', error);
+    res.status(500).json({ error: 'Error retrieving books' });
   }
 });
 
