@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         })
         .then(function (response) {
-            console.log(response);
             if (response.ok) {
                 return response.json();
             }
