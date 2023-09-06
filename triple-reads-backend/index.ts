@@ -206,10 +206,7 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
     const booksMap = new Map<string, Book>();
 
     response.data.results.bindings.forEach((bookBinding: any) => {
-      const isbn = bookBinding.isbn.value;
-
-      console.log();
-
+      const isbn = bookBinding.isbn.value;      
 
       if (!booksMap.has(isbn)) {
         const bookData: Book = {
@@ -496,33 +493,28 @@ async function deleteBook(isbn: string): Promise<boolean> {
 
 export async function searchBooks(req: Request, res: Response) {
   try {
-    const title = req.query.title as string;
-    const author = req.query.authors as string;
-    const genre = req.query.genres as string;
-    const publishedYear = req.query.publishedYear as string;
-    const publisher = req.query.publishedYear as string;
-    const isbn = req.query.isbn as string;
-    const abstract = req.query.abstract as string;
+    const { title, author, genre,publishedYear, publisher, isbn, abstract, adminEmail } = req.query;
 
     const allBooks = await getAllBooks();
 
     // Filter the books based on the search criteria
     const filteredBooks = allBooks.filter(book =>
-      (!title || book.title.toLowerCase().includes(title.toLowerCase())) &&
-      (!author || book.authors.some(b_author => b_author.toLowerCase().includes(author.toLowerCase()))) &&
-      (!genre || book.genres.some(b_genre => b_genre.toLowerCase().includes(genre.toLowerCase()))) &&
+      (!title || book.title.toLowerCase().includes(title.toString().toLowerCase())) &&
+      (!author || book.authors.some(b_author => b_author.toLowerCase().includes(author.toString().toLowerCase()))) &&
+      (!genre || book.genres.some(b_genre => b_genre.toLowerCase().includes(genre.toString().toLowerCase()))) &&
       (!publishedYear || book.publishedYear === publishedYear) &&
-      (!publisher || book.publisher.toLowerCase().includes(publisher.toLowerCase())) &&
+      (!publisher || book.publisher.toLowerCase().includes(publisher.toString().toLowerCase())) &&
       (!isbn || book.isbn === isbn) &&
+      (!adminEmail || book.adminEmail == adminEmail) &&
 
       // abstract means search in all fields
-      ((!abstract || book.abstract.toLowerCase().includes(abstract.toLowerCase())) ||
-        (!abstract || book.title.toLowerCase().includes(abstract.toLowerCase())) ||
-        (!abstract || book.isbn.toLowerCase().includes(abstract.toLowerCase())) ||
-        (!abstract || book.publishedYear.toLowerCase().includes(abstract.toLowerCase())) ||
-        (!abstract || book.publisher.toLowerCase().includes(abstract.toLowerCase())) ||
-        (!abstract || book.authors.some(b_author => b_author.toLowerCase().includes(abstract.toLowerCase()))) ||
-        (!abstract || book.genres.some(b_genre => b_genre.toLowerCase().includes(abstract.toLowerCase()))))
+      ((!abstract || book.abstract.toLowerCase().includes(abstract.toString().toLowerCase())) ||
+        (!abstract || book.title.toLowerCase().includes(abstract.toString().toLowerCase())) ||
+        (!abstract || book.isbn.toLowerCase().includes(abstract.toString().toLowerCase())) ||
+        (!abstract || book.publishedYear.toLowerCase().includes(abstract.toString().toLowerCase())) ||
+        (!abstract || book.publisher.toLowerCase().includes(abstract.toString().toLowerCase())) ||
+        (!abstract || book.authors.some(b_author => b_author.toLowerCase().includes(abstract.toString().toLowerCase()))) ||
+        (!abstract || book.genres.some(b_genre => b_genre.toLowerCase().includes(abstract.toString().toLowerCase()))))
     );
 
     res.status(200).json(filteredBooks);
