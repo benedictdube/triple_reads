@@ -209,7 +209,7 @@ app.get('/books/:isbn', async (req: Request, res: Response) => {
       const isbn = bookBinding.isbn.value;
 
       console.log();
-      
+
 
       if (!booksMap.has(isbn)) {
         const bookData: Book = {
@@ -251,159 +251,39 @@ app.post('/book', async (req: Request, res: Response) => {
   try {
     const { title, isbn, datePublished, abstract, image, authors, genres, publisher, admin } = req.body;
 
-    const checkQuery = `
-      PREFIX schema: <http://schema.org/>
-      PREFIX ex: <http://example.org/>
-
-      ASK WHERE {
-        ?book a schema:Book ;
-          schema:isbn "${isbn}" .
-      }
-    `;
-
-    const { data } = await axios.post(fusekiUrl, null, {
-      params: {
-        query: checkQuery,
-      },
-    });
-
-    const exists = data.boolean;
-
-    if (exists) {
-      return res.status(404).json({ error: 'Book already exists with that isbn' });
-    }
-
-    const adminString = await getAdminID(admin);
-
-    let authorString = "schema:author";
-
-    for (let i = 0; i < authors.length; i++) {
-
-      if (i !== authors.length - 1) {
-        authorString += " ex:" + authors[i].replace(/\s+/g, '_') + ",";
-      }
-      else {
-        authorString += " ex:" + authors[i].replace(/\s+/g, '_') + " ;";
-      }
-
-      const authorQuery = `
-        PREFIX schema: <http://schema.org/>
-        PREFIX ex: <http://example.org/>
-
-        INSERT DATA {
-          ex:${authors[i].replace(/\s+/g, '_')} a schema:Person ;
-            schema:name "${authors[i]}" .
-        }
-      `;
-
-      addAuthor(authorQuery);
-    }
-
-    let genreString = "schema:genre";
-
-    for (let i = 0; i < genres.length; i++) {
-
-      if (i !== genres.length - 1) {
-        genreString += " ex:" + genres[i].replace(/\s+/g, '_') + ",";
-      }
-      else {
-        genreString += " ex:" + genres[i].replace(/\s+/g, '_') + " ;";
-      }
-
-      const genreQuery = `
-        PREFIX schema: <http://schema.org/>
-        PREFIX ex: <http://example.org/>
-
-        INSERT DATA {
-          ex:${genres[i].replace(/\s+/g, '_')} a ex:Genre ;
-            schema:name "${genres[i]}" .
-        }
-      `;
-
-      addGenre(genreQuery);
-    }
-
-    const currentDate = new Date();
-
-    const bookQuery = `
-      PREFIX schema: <http://schema.org/>
-      PREFIX ex: <http://example.org/>
-
-      INSERT DATA {
-        ex:${isbn} a schema:Book ;
-          schema:title "${title}" ;
-          schema:isbn "${isbn}" ;
-          schema:publishedYear "${datePublished}" ;
-          schema:abstract "${abstract}" ;
-          schema:image "${image}" ;
-          ex:addedBy ex:${adminString} ;
-          schema:dateAdded "${currentDate}" ;
-          ${authorString}
-          ${genreString}
-          schema:publisher "${publisher}" .
-      }
-    `;
-
-    await axios.post(fusekiUrlUpdate, null, {
-      params: {
-        update: bookQuery,
-      },
-    });
-
-    res.status(201).json({ message: 'Book inserted successfully' });
+    const added = await addBook(title, isbn, datePublished, abstract, image, authors, genres, publisher, admin);
+    res.status(201).json("Book added successfully");
   } catch (error) {
     console.error('Error inserting book:', error);
-    res.status(500).json({ error: 'Error inserting book' });
+    res.status(500).json({ error: 'Error creating book' });
   }
 });
 
 app.delete('/book/:isbn', async (req, res) => {
   try {
-    const isbnToDelete = req.params.isbn;
-
-    const checkQuery = `
-      PREFIX schema: <http://schema.org/>
-      PREFIX ex: <http://example.org/>
-
-      ASK WHERE {
-        ?book a schema:Book ;
-          schema:isbn "${isbnToDelete}" .
-      }
-    `;
-
-    const { data } = await axios.post(fusekiUrl, null, {
-      params: {
-        query: checkQuery,
-      },
-    });
-
-    const exists = data.boolean;
-
-    if (!exists) {
-      return res.status(404).json({ error: 'Book not found' });
-    }
-
-    const deleteQuery = `
-      PREFIX schema: <http://schema.org/>
-      PREFIX ex: <http://example.org/>
-
-      DELETE WHERE {
-        ?book a schema:Book ;
-          schema:isbn "${isbnToDelete}" ;
-          ?p ?o .
-      }
-    `;
-
-    await axios.post(fusekiUrlUpdate, null, {
-      params: {
-        update: deleteQuery,
-      },
-    });
-
+    const deleted = await deleteBook(req.params.isbn);
     res.status(201).json({ message: 'Book deleted successfully' });
   } catch (error) {
     console.error('Error deleting book:', error);
     res.status(500).json({ error: 'Error deleting book' });
+  }
+});
+
+app.put('/book', async (req, res) => {
+  try {
+    const { title, isbn, datePublished, abstract, image, authors, genres, publisher, admin } = req.body;
+
+    const deleted = await deleteBook(isbn);
+
+    if (deleted) {
+      const added = await addBook(title, isbn, datePublished, abstract, image, authors, genres, publisher, admin);
+      res.status(201).json({ message: 'Book updated successfully' });
+    } else {
+      res.status(404).json({ error: 'Book not found' });
+    }
+  } catch (error) {
+    console.error('Error updating book:', error);
+    res.status(500).json({ error: 'Error deleting and adding book' });
   }
 });
 
@@ -464,6 +344,154 @@ async function getAdminID(adminEmail: string): Promise<string> {
 
     return adminEmail.replace(/[@.]/g, '');
   }
+}
+
+async function addBook(title: string, isbn: string, publishedYear: string, abstract: string, image: string, authors: string[], genres: string[], publisher: string, admin: string): Promise<boolean> {
+  const checkQuery = `
+      PREFIX schema: <http://schema.org/>
+      PREFIX ex: <http://example.org/>
+
+      ASK WHERE {
+        ?book a schema:Book ;
+          schema:isbn "${isbn}" .
+      }
+    `;
+
+  const { data } = await axios.post(fusekiUrl, null, {
+    params: {
+      query: checkQuery,
+    },
+  });
+
+  const exists = data.boolean;
+
+  if (exists) {
+    return false;
+  }
+
+  const adminString = await getAdminID(admin);
+
+  let authorString = "schema:author";
+
+  for (let i = 0; i < authors.length; i++) {
+
+    if (i !== authors.length - 1) {
+      authorString += " ex:" + authors[i].replace(/\s+/g, '_') + ",";
+    }
+    else {
+      authorString += " ex:" + authors[i].replace(/\s+/g, '_') + " ;";
+    }
+
+    const authorQuery = `
+        PREFIX schema: <http://schema.org/>
+        PREFIX ex: <http://example.org/>
+
+        INSERT DATA {
+          ex:${authors[i].replace(/\s+/g, '_')} a schema:Person ;
+            schema:name "${authors[i]}" .
+        }
+      `;
+
+    addAuthor(authorQuery);
+  }
+
+  let genreString = "schema:genre";
+
+  for (let i = 0; i < genres.length; i++) {
+
+    if (i !== genres.length - 1) {
+      genreString += " ex:" + genres[i].replace(/\s+/g, '_') + ",";
+    }
+    else {
+      genreString += " ex:" + genres[i].replace(/\s+/g, '_') + " ;";
+    }
+
+    const genreQuery = `
+        PREFIX schema: <http://schema.org/>
+        PREFIX ex: <http://example.org/>
+
+        INSERT DATA {
+          ex:${genres[i].replace(/\s+/g, '_')} a ex:Genre ;
+            schema:name "${genres[i]}" .
+        }
+      `;
+
+    addGenre(genreQuery);
+  }
+
+  const currentDate = new Date();
+
+  const bookQuery = `
+      PREFIX schema: <http://schema.org/>
+      PREFIX ex: <http://example.org/>
+
+      INSERT DATA {
+        ex:${isbn} a schema:Book ;
+          schema:title "${title}" ;
+          schema:isbn "${isbn}" ;
+          schema:publishedYear "${publishedYear}" ;
+          schema:abstract "${abstract}" ;
+          schema:image "${image}" ;
+          ex:addedBy ex:${adminString} ;
+          schema:dateAdded "${currentDate}" ;
+          ${authorString}
+          ${genreString}
+          schema:publisher "${publisher}" .
+      }
+    `;
+
+  await axios.post(fusekiUrlUpdate, null, {
+    params: {
+      update: bookQuery,
+    },
+  });
+
+  return true;
+}
+
+async function deleteBook(isbn: string): Promise<boolean> {
+  const isbnToDelete = isbn;
+
+  const checkQuery = `
+      PREFIX schema: <http://schema.org/>
+      PREFIX ex: <http://example.org/>
+
+      ASK WHERE {
+        ?book a schema:Book ;
+          schema:isbn "${isbnToDelete}" .
+      }
+    `;
+
+  const { data } = await axios.post(fusekiUrl, null, {
+    params: {
+      query: checkQuery,
+    },
+  });
+
+  const exists = data.boolean;
+
+  if (!exists) {
+    return false;
+  }
+
+  const deleteQuery = `
+      PREFIX schema: <http://schema.org/>
+      PREFIX ex: <http://example.org/>
+
+      DELETE WHERE {
+        ?book a schema:Book ;
+          schema:isbn "${isbnToDelete}" ;
+          ?p ?o .
+      }
+    `;
+
+  await axios.post(fusekiUrlUpdate, null, {
+    params: {
+      update: deleteQuery,
+    },
+  });
+
+  return true;
 }
 
 export async function searchBooks(req: Request, res: Response) {

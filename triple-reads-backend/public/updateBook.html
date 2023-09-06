@@ -45,7 +45,7 @@
           
 
 
-        <form class="addBookForm" id="addBookForm">
+        <form class="updateBookForm" id="updateBookForm">
             <section class="input-container">
                 <label>Book Title <span class="required">*</span></label>
                 <input type="text" id="bookTitleInput" required title="Please enter a book title" />
@@ -78,11 +78,6 @@
             </section>
             
             <section class="input-container">
-                <label>ISBN number <span class="required">*</span></label>
-                <input type="text" id="IsbnInput" required="required" />
-            </section>
-
-            <section class="input-container">
                 <label id="coverUrlLabel">Cover URL <span class="required">*</span></label>
                 <textarea id="coverUrlInput" pattern="^(?:(?:https?|HTTPS?|ftp|FTP):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-zA-Z\u00a1-\uffff0-9]-*)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]-*)*[a-zA-Z\u00a1-\uffff0-9]+)*)(?::\d{2,})?(?:[\/?#]\S*)?$" required="required"></textarea>
                 <img id="coverUrlImgInput" src="https://via.placeholder.com/200x300.png?text=Book+Cover" />
@@ -93,7 +88,7 @@
                 <textarea id="abstractInput"></textarea>
             </section>
 
-            <button type="submit" id="submitAddBookForm" class="btn submit-btn">Update Book</button>
+            <button type="submit" id="submitUpdateBookForm" class="btn submit-btn">Update Book</button>
         </form>
     </main>
 
