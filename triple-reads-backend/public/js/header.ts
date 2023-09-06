@@ -58,9 +58,6 @@ function loadHeader() {
         });
         menu_section.appendChild(ul);
         
-        //const dropdownButton = document.getElementById("dropdownButton") as HTMLButtonElement;
-        //const dropdownContent = document.getElementById("dropdownContent") as HTMLElement;
-
         dropdown_btn.addEventListener("click", function () {
             ul.classList.toggle("show");
         });

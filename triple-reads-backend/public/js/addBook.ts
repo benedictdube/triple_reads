@@ -185,16 +185,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const abstractInput = document.getElementById("abstractInput") as HTMLInputElement;
         const abstract = abstractInput.value as string;
     
-        const addedBook = addBook(bookTitle, authors, genres, publisher, published, isbn, coverUrl, abstract);
-        if (addedBook) {
-            // show success message
-            showSuccessPopup("Book added successfully!", false);
-            // TODO: redirect to view full page
+        try {
+            const addedBook = await addBook(bookTitle, authors, genres, publisher, published, isbn, coverUrl, abstract);
+            if (addedBook) {
+                // show success message
+                showSuccessPopup("Book added successfully!", false);
+                // TODO: redirect to view full page
+            }
+            else {
+                // show failure
+                showSuccessPopup("Book failed to add!", false);
+            }
         }
-        else {
+        catch (error) {
+            console.log(error);
             // show failure
-            showSuccessPopup("Book failed to add!", false);
-
+            showSuccessPopup('Error', false);
         }
     }
 
@@ -333,7 +339,7 @@ document.addEventListener("DOMContentLoaded", function () {
         coverUrlImgInput.src = src;
     }
 
-    function addBook(bookTitle:string, authors: string[], genres: string[], publisher: string, published: string, isbn: string, coverUrl: string, abstract: string) {
+    async function addBook(bookTitle:string, authors: string[], genres: string[], publisher: string, published: string, isbn: string, coverUrl: string, abstract: string) {
         console.log("book title " + bookTitle);
         console.log("authors " + authors);
         console.log("genres " + genres);
@@ -343,9 +349,42 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("cover url " + coverUrl);
         console.log("abstract " + abstract);
 
-        // TODO: post the book!
-        
-        return true;
+        const requestBody = {
+            title: bookTitle, 
+            isbn: isbn, 
+            abstract: abstract, 
+            image: coverUrl, 
+            authors: authors, 
+            genres: genres, 
+            publisher: publisher, 
+            datePublished: published, 
+            admin: localStorage.getItem('email')
+        }
+
+        console.log(requestBody);
+
+        try {
+            const response = await fetch('/boo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+    
+            if (response.ok) 
+            {
+                console.log('Book added successfully');
+                return true;
+            } else {
+                console.error('Failed to add book');
+                return false; 
+            }
+        }
+        catch (error) {
+            console.error('Error: ' + error);
+            throw error;
+        }
     }
 
     bookTitleInput.addEventListener("input", function () {
