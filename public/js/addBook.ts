@@ -6,20 +6,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeButton = document.querySelector(".close") as HTMLSpanElement;
 
     // Function to show the modal with a success message
-    function showSuccessPopup(message: string, showButton: boolean) {
+    function showSuccessPopup(message: string, showButton: string) {
         const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
         successMessage.textContent = message;
         modal.style.display = "block";
 
         const popupBtn = document.getElementById("modelBtn") as HTMLButtonElement;
-        if (showButton) {
+        if (showButton.length > 0) {
             popupBtn.style.display = "initial";
             popupBtn.addEventListener("click", () => {
-                window.location.href = "index.html";
+                window.location.href = showButton;
             });
 
             closeButton.addEventListener("click", () => {
-                window.location.href = "index.html";
+                window.location.href = showButton;
             });
         }
         else {
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const loginMessage = document.getElementById('successModal');
         if (loginMessage) {
             loginMessage.style.display = 'block';
-            showSuccessPopup("You are not logged in", true);
+            showSuccessPopup("You are not logged in", "index.html");
         }
     }
 
@@ -63,9 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const publishedInput = document.getElementById("publishedInput") as HTMLInputElement;
     const IsbnInput = document.getElementById("IsbnInput") as HTMLInputElement;
     const coverUrlInput = document.getElementById("coverUrlInput") as HTMLInputElement; 
-
-    
-
 
     function createInputAuthorBox() {
         const mainBox = document.getElementById("authoursInput") as HTMLElement;
@@ -187,20 +184,21 @@ document.addEventListener("DOMContentLoaded", function () {
     
         try {
             const addedBook = await addBook(bookTitle, authors, genres, publisher, published, isbn, coverUrl, abstract);
-            if (addedBook) {
+
+            if (addedBook["message"]) {
                 // show success message
-                showSuccessPopup("Book added successfully!", false);
+                showSuccessPopup(addedBook["message"], "index.html");
+                
                 // TODO: redirect to view full page
             }
             else {
                 // show failure
-                showSuccessPopup("Book failed to add!", false);
+                showSuccessPopup(addedBook["error"], "");
             }
         }
         catch (error) {
-            console.log(error);
             // show failure
-            showSuccessPopup('Error', false);
+            showSuccessPopup(error as string, "");
         }
     }
 
@@ -340,15 +338,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function addBook(bookTitle:string, authors: string[], genres: string[], publisher: string, published: string, isbn: string, coverUrl: string, abstract: string) {
-        console.log("book title " + bookTitle);
-        console.log("authors " + authors);
-        console.log("genres " + genres);
-        console.log("publisher " + publisher);
-        console.log("published " + published);
-        console.log("ISBN number " + isbn);
-        console.log("cover url " + coverUrl);
-        console.log("abstract " + abstract);
-
         const requestBody = {
             title: bookTitle, 
             isbn: isbn, 
@@ -361,30 +350,26 @@ document.addEventListener("DOMContentLoaded", function () {
             admin: localStorage.getItem('email')
         }
 
-        console.log(requestBody);
-
-        try {
-            const response = await fetch('/boo', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-    
-            if (response.ok) 
-            {
-                console.log('Book added successfully');
-                return true;
-            } else {
-                console.error('Failed to add book');
-                return false; 
+        const response = await fetch('/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
             }
-        }
-        catch (error) {
-            console.error('Error: ' + error);
+            else {
+                return response.json();
+            }
+        })
+        .catch(function (error) {
             throw error;
-        }
+        });
+
+        return response; 
     }
 
     bookTitleInput.addEventListener("input", function () {
