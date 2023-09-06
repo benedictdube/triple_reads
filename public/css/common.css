@@ -109,11 +109,48 @@ main {
     text-decoration: none;
     cursor: pointer;
 }
-  
+
+#book_grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	grid-gap: 20px;
+}
+
+#book_grid #book_item {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: var(--heading-color)
+}
+
+#book_grid #book_item img {
+	margin-bottom: 15px;
+}
+
+#book_grid #book_item h1 {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 10px;
+	font-size: 28px;
+}
+
+#book_grid #book_item h3{
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+}
 
 @media screen and (max-width: 1200px) {
     .btn {
         width: 105% !important;
         float: left;
     }
+}
+
+@media screen and (max-width: 768px) {
+	#book_grid {
+		grid-template-columns: 1fr;
+	}
 }
