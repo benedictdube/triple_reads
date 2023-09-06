@@ -122,7 +122,12 @@ main {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	color: var(--heading-color)
+	color: var(--heading-color);
+}
+
+#book_grid #book_item a {
+    text-decoration: none;
+    color: inherit;
 }
 
 #book_grid #book_item img {

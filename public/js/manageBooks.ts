@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         books.forEach(function (book) {
             const cell = document.createElement("article") as HTMLElement;
+            const a = document.createElement("a") as HTMLAnchorElement;
             const cover = document.createElement("img") as HTMLImageElement;
             const title = document.createElement("h1") as HTMLHeadingElement;
             const author = document.createElement("h3") as HTMLHeadingElement;
@@ -69,10 +70,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             cover.alt = "Book Cover";
             cover.id = "cover";
             cover.width = 200;
+            a.href = "viewBook.html?isbn=" + book.isbn;
             
-            cell.appendChild(cover);
-            cell.appendChild(title);
-            cell.appendChild(author);
+            a.appendChild(cover);
+            a.appendChild(title);
+            a.appendChild(author);
+            cell.appendChild(a);
             
             grid.appendChild(cell);
         })
