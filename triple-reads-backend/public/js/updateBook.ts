@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         createInputAuthorBox(index);
                     }
 
-                    let authorInput = document.querySelector('.authorInput') as HTMLInputElement;
+                    let authorInput = document.getElementById('authorInputValue') as HTMLInputElement;
 
                     if (index !== 0) {
-                        authorInput = document.querySelector('.authorInput' + index) as HTMLInputElement;
+                        authorInput = document.getElementById('authorInputValue' + index) as HTMLInputElement;
                         authorInput.value = bookData[0].authors[index];
                     }
                     else {
@@ -47,10 +47,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         createInputGenereBox(index);
                     }
 
-                    let genreInput = document.querySelector('.genreInput') as HTMLInputElement;
+                    let genreInput = document.getElementById('genreInputValue') as HTMLInputElement;
 
                     if (index !== 0) {
-                        genreInput = document.querySelector('.genreInput' + index) as HTMLInputElement;
+                        genreInput = document.getElementById('genreInputValue' + index) as HTMLInputElement;
                         genreInput.value = bookData[0].genres[index];
                     }
                     else {
@@ -119,12 +119,16 @@ document.addEventListener("DOMContentLoaded", function () {
         // new input 
         const inputBox = document.createElement("input");
         inputBox.setAttribute("type", "text");
+
         if (index === 0) {
-            inputBox.setAttribute("class", "input-add authorInput");
+            inputBox.setAttribute("id", "authorInputValue");
         }
         else {
-            inputBox.setAttribute("class", "input-add authorInput" + index);
+            const idName = "authorInputValue" + index;
+            inputBox.setAttribute("id", idName);
         }
+
+        inputBox.setAttribute("class", "input-add authorInput");
 
         mainBox?.appendChild(inputBox);
 
@@ -155,12 +159,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const inputBox = document.createElement("input");
         inputBox.setAttribute("type", "text");
         if (index === 0) {
-            inputBox.setAttribute("class", "input-add genreInput");
+            inputBox.setAttribute("id", "genreInputValue");
         }
         else {
-            inputBox.setAttribute("class", "input-add genreInput" + index);
+            const idName = "genreInputValue" + index;
+            inputBox.setAttribute("id", idName);
         }
         mainBox?.appendChild(inputBox);
+
+        inputBox.setAttribute("class", "input-add genreInput");
+
 
         // new button
         const deleteBtn = document.createElement("button");
@@ -199,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
                 else {
-                    authors.push(authorValue);
+                    authors.push(authorValue);                    
                 }
             }
         });
@@ -356,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function updateBook(bookTitle: string, authors: string[], genres: string[], publisher: string, published: string, coverUrl: string, abstract: string) {
-        //Need to get logged in admin to add to book and the isbn
+        //Need to get logged in admin to add to book and the isbn       
 
         const admin = 'test@admin.com';
 
@@ -459,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
             publisher: publisher,
             admin: admin,
             datePublished: published,
-        };
+        };        
 
         try {
             const response = await fetch('/book', {
