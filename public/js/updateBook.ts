@@ -16,13 +16,16 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchAndDisplayBookDetails();
 
     async function fetchAndDisplayBookDetails() {
-        const url = `/books/${isbn}`;
+        const url = `/book/${isbn}`;
 
         try {
             const response = await fetch(url);
             const bookData = await response.json();
 
             if (response.ok) {
+                const isbnValue = document.getElementById('isbnValue') as HTMLInputElement;
+                isbnValue.value = bookData[0].isbn;
+
                 const bookTitleInput = document.getElementById('bookTitleInput') as HTMLInputElement;
                 bookTitleInput.value = bookData[0].title;
 
@@ -74,10 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 abstractInput.value = bookData[0].abstract;
 
             } else {
-                console.error('Book not found:');
+                showSuccessPopup("Book not found with that ISBN");
             }
         } catch (error) {
-            console.error('Error retrieving book:', error);
+            showSuccessPopup("Error fetching book details");
         }
     }
 

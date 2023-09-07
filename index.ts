@@ -173,7 +173,7 @@ app.get('/books/search/:title', async (req: Request, res: Response) => {
 });
 
 //GET REQUEST FOR BOOKS BASED ON ISBN
-app.get('/books/:isbn', async (req: Request, res: Response) => {
+app.get('/book/:isbn', async (req: Request, res: Response) => {
   try {
     const query = `
       PREFIX schema: <http://schema.org/>
