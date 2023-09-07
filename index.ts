@@ -234,7 +234,7 @@ app.get('/book/:isbn', async (req: Request, res: Response) => {
       }
     });
 
-    const booksData = Array.from(booksMap.values());
+    const booksData = Array.from(booksMap.values())[0];
 
     res.json(booksData);
   } catch (error) {

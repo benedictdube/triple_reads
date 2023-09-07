@@ -24,12 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (response.ok) {
                 const isbnValue = document.getElementById('isbnValue') as HTMLInputElement;
-                isbnValue.value = bookData[0].isbn;
+                isbnValue.value = bookData.isbn;
 
                 const bookTitleInput = document.getElementById('bookTitleInput') as HTMLInputElement;
-                bookTitleInput.value = bookData[0].title;
+                bookTitleInput.value = bookData.title;
 
-                for (let index = 0; index < bookData[0].authors.length; index++) {
+                for (let index = 0; index < bookData.authors.length; index++) {
                     if (index > 0) {
                         createInputAuthorBox(index);
                     }
@@ -38,14 +38,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     if (index !== 0) {
                         authorInput = document.getElementById('authorInputValue' + index) as HTMLInputElement;
-                        authorInput.value = bookData[0].authors[index];
+                        authorInput.value = bookData.authors[index];
                     }
                     else {
-                        authorInput.value = bookData[0].authors[index];
+                        authorInput.value = bookData.authors[index];
                     }
                 }
 
-                for (let index = 0; index < bookData[0].genres.length; index++) {
+                for (let index = 0; index < bookData.genres.length; index++) {
                     if (index > 0) {
                         createInputGenereBox(index);
                     }
@@ -54,27 +54,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     if (index !== 0) {
                         genreInput = document.getElementById('genreInputValue' + index) as HTMLInputElement;
-                        genreInput.value = bookData[0].genres[index];
+                        genreInput.value = bookData.genres[index];
                     }
                     else {
-                        genreInput.value = bookData[0].genres[index];
+                        genreInput.value = bookData.genres[index];
                     }
                 }
 
                 const publisherInput = document.getElementById('publisherInput') as HTMLInputElement;
-                publisherInput.value = bookData[0].publisher;
+                publisherInput.value = bookData.publisher;
 
                 const publishedInput = document.getElementById('publishedInput') as HTMLInputElement;
-                publishedInput.value = bookData[0].publishedYear;
+                publishedInput.value = bookData.publishedYear;
 
                 const coverUrlInput = document.getElementById('coverUrlInput') as HTMLTextAreaElement;
-                coverUrlInput.value = bookData[0].image;
+                coverUrlInput.value = bookData.image;
 
                 const coverUrlImgInput = document.getElementById('coverUrlImgInput') as HTMLImageElement;
-                coverUrlImgInput.src = bookData[0].image;
+                coverUrlImgInput.src = bookData.image;
 
                 const abstractInput = document.getElementById('abstractInput') as HTMLTextAreaElement;
-                abstractInput.value = bookData[0].abstract;
+                abstractInput.value = bookData.abstract;
 
             } else {
                 showSuccessPopup("Book not found with that ISBN");
@@ -376,7 +376,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (bookAdded) {
             showSuccessPopup("Book updated successfully!");
-            // window.location.href = `/viewBook.html?isbn=${isbn}`;
+            window.location.href = `viewBook.html?isbn=${isbn}`;
         }
         else {
             showSuccessPopup("Book failed to update!");
