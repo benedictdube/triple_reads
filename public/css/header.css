@@ -6,9 +6,7 @@
 }
 
 .backButton {
-    position: absolute;
-    left: 4rem;
-    height: 2rem;
+    width: 4rem;
 }
 
 .logo {

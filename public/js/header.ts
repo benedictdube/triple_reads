@@ -7,16 +7,6 @@ function loadHeader() {
     const header = document.getElementById("header") as HTMLElement;
     header.classList.add("header");
 
-    const backButton = document.createElement("img") as HTMLImageElement;
-    backButton.classList.add("backButton");
-    backButton.src = "images/Back_Button.png";
-
-    // Add a click event listener to the back button
-    backButton.addEventListener("click", function () {
-        // Navigate back to the previous page
-        history.back();
-    });
-
     // add logo section 
     const logo_section = document.createElement("section") as HTMLElement;
     logo_section.classList.add("logo");
@@ -37,20 +27,11 @@ function loadHeader() {
     h1.textContent = "TripleBooks";
     logo_section.appendChild(h1);
 
-    header.appendChild(backButton);
     header.appendChild(logo_section);
 
     // add menu section 
     const menu_section = document.createElement("section") as HTMLElement;
     menu_section.classList.add("menu");
-
-    if (window.location.pathname.includes("viewBook.html")) {
-        // Show the back button
-        backButton.style.display = "block";
-    } else {
-        // Hide the back button on other pages
-        backButton.style.display = "none";
-    }
 
     if (localStorage.getItem("email")) {
         // button 
