@@ -89,6 +89,9 @@ function loadHeader() {
         button_logged_in.classList.add("login-btn");
         button_logged_in.setAttribute("type", "button");
         button_logged_in.textContent = "Sign Up";
+		button_logged_in.onclick = function () {
+        location.href = "login.html";
+		};
         menu_section.appendChild(button_logged_in);
     }
 
