@@ -8,7 +8,7 @@ interface Book {
     authors: string[];
     genres: string[];
     adminEmail: string;
-  }
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
     // Get the modal and close button
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     async function getBook(isbn: string) : Promise<Book[]>{
-        const response = await fetch(`/search?isbn=${isbn}`, {
+        const response = await fetch(`/books/${isbn}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -108,4 +108,5 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         return response; 
     }
+
 })
