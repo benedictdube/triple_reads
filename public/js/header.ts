@@ -20,6 +20,11 @@ function loadHeader() {
     img.src = "images/logo.png";
     logo_a.appendChild(img);
 
+    img.addEventListener("click", function () {
+        // Redirect to index.html
+        window.location.href = "index.html";
+    });
+
     // adding the name 
     const h1 = document.createElement("h1") as HTMLHeadingElement;
     h1.textContent = "TripleBooks";

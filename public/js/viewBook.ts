@@ -34,6 +34,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
+    const backButton = document.getElementById("backButton") as HTMLButtonElement;
+    backButton.addEventListener("click", function() {
+        history.back();
+    });
+
     const routeUrl = new URL(window.location.href);
     const isbn = routeUrl.searchParams.get('isbn') as string;
 
