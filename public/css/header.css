@@ -7,9 +7,12 @@
 
 .backButton {
     width: 4rem;
+    cursor: pointer;
 }
 
-.logo {
+.logo a {
+    text-decoration: none;
+    color: inherit;
     display: flex;
     align-items: center;
     cursor: pointer;

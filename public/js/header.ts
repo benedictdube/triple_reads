@@ -10,12 +10,15 @@ function loadHeader() {
     // add logo section 
     const logo_section = document.createElement("section") as HTMLElement;
     logo_section.classList.add("logo");
-
-
+    
+    // logo hyperlink
+    const logo_a = document.createElement("a") as HTMLAnchorElement;
+    logo_a.href = "index.html";
+    
     // adding the logo 
     const img = document.createElement("img") as HTMLImageElement;
     img.src = "images/logo.png";
-    logo_section.appendChild(img);
+    logo_a.appendChild(img);
 
     img.addEventListener("click", function () {
         // Redirect to index.html
@@ -25,7 +28,8 @@ function loadHeader() {
     // adding the name 
     const h1 = document.createElement("h1") as HTMLHeadingElement;
     h1.textContent = "TripleBooks";
-    logo_section.appendChild(h1);
+    logo_a.appendChild(h1);
+    logo_section.appendChild(logo_a);
 
     header.appendChild(logo_section);
 
@@ -48,8 +52,8 @@ function loadHeader() {
         menu_section.appendChild(dropdown_btn);
 
         // dropdown list 
-        const dropdown_list: string[] = ["Manage Books", "Log Out"];
-        const dropdown_list_href: string[] = ["#", "#"];
+        const dropdown_list : string[] = ["Add Books", "Manage Books", "Log Out"];
+        const dropdown_list_href : string[] = ["addBook.html", "manageBooks.html", "#"];
         const ul = document.createElement("ul") as HTMLUListElement;
         ul.classList.add("dropdown-content");
         ul.setAttribute("id", "dropdownContent");
@@ -63,13 +67,9 @@ function loadHeader() {
             ul.appendChild(li);
         });
         menu_section.appendChild(ul);
-
-
-        const dropdownButton = document.getElementById("dropdownButton") as HTMLButtonElement;
-        const dropdownContent = document.getElementById("dropdownContent") as HTMLElement;
-
-        dropdownButton.addEventListener("click", function () {
-            dropdownContent.classList.toggle("show");
+        
+        dropdown_btn.addEventListener("click", function () {
+            ul.classList.toggle("show");
         });
 
         // Close the dropdown if the user clicks outside of it
@@ -77,8 +77,8 @@ function loadHeader() {
             const targetElement = event.target as Element;
 
             if (!targetElement.matches("#dropdownButton")) {
-                if (dropdownContent.classList.contains("show")) {
-                    dropdownContent.classList.remove("show");
+                if (ul.classList.contains("show")) {
+                    ul.classList.remove("show");
                 }
             }
         });

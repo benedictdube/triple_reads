@@ -14,27 +14,33 @@
 
     <script src="js/header.js"></script>
     <script src="js/footer.js"></script>
+	<script src="js/viewBook.js"></script>
 </head>
 <body onload="loadPage()">
     <header id="header"></header>
 
     <main>
-        <section class="left-section">
-            <img class="backButton" src="images/Back_Button.png" alt="back" />
-            <img class="coverBook" src="https://via.placeholder.com/200x300.png?text=Book+Cover" />
-            <button type="button" id="addGenre" class="btn delete-btn">Delete</button>
-            <button type="button" id="addGenre" class="btn submit-btn">Edit</button>
+        <section id="successModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p id="successMessage" class="success-message">This is my message</p>
+            </div>
+        </section>
+
+        <section class="left-section" id="leftSection">
+            <img class="backButton" id="backButton" src="images/Back_Button.png" alt="back" />
+            <img class="coverBook" id="coverBook" src="https://via.placeholder.com/200x300.png?text=Book+Cover" />
         </section>
 
         <section class="right-section">
-            <h1 class="bookTitle">The BFG</h1>
-            <h2 class="authors">Roald Dahl</h2>
+            <h1 class="bookTitle" id="bookTitle"></h1>
+            <h2 class="authors" id="authors"></h2>
             <hr/>
-            <p class="isbn">ISBN: 9879873894723</p>
-            <p class="genres">Genre: Drame, Fantasy</p>
-            <p class="publishInfo">Published By Puffin Books, 2007.</p>
+            <p class="isbn" id="isbn">ISBN: </p>
+            <p class="genres" id="genres">Genre: </p>
+            <p class="publishInfo" id="publishInfo">Published By , .</p>
             
-            <p class="abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p class="abstract" id="abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </section>
     </main>
 
