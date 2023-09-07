@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    
+    <link rel="icon" type="image/x-icon" href="images/logo.png">
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+	<link rel="stylesheet" href="css/login.css">
+
+    <script src="js/header.js"></script>
+    <script src="js/footer.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.933.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.1/dist/amazon-cognito-identity.min.js"></script>
+</head>
+<body onload="loadPage()">
+    <header id="header"></header>
+
+    <main>
+		<form id="loginForm">
+			<label for="email">Email</label>
+			<input id="email" type="email" name="email" required ><br><br>
+			<label for="pwd">Password</label>
+			<input id="pwd" type="password" name="pwd" minlength="8" pattern="[a-zA-Z0-9]+" required ><br><br>
+			<button type="submit" id="login">Login</button>
+		</form>
+	</main>
+
+    <footer id="footer"></footer>
+</body>
+</html>
