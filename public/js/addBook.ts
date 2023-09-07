@@ -1,44 +1,6 @@
-const bookCover = "https://via.placeholder.com/200x300.png?text=Book+Cover";
+import * as validations from "./validations";
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Get the modal and close button
-    const modal = document.getElementById("successModal") as HTMLElement;
-    const closeButton = document.querySelector(".close") as HTMLSpanElement;
-
-    // Function to show the modal with a success message
-    function showSuccessPopup(message: string, showButton: string) {
-        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
-        successMessage.textContent = message;
-        modal.style.display = "block";
-
-        const popupBtn = document.getElementById("modelBtn") as HTMLButtonElement;
-        if (showButton.length > 0) {
-            popupBtn.style.display = "initial";
-            popupBtn.addEventListener("click", () => {
-                window.location.href = showButton;
-            });
-
-            closeButton.addEventListener("click", () => {
-                window.location.href = showButton;
-            });
-        }
-        else {
-            popupBtn.style.display = "none";
-
-            // Close the modal when the close button is clicked
-            closeButton.addEventListener("click", () => {
-                modal.style.display = "none";
-            });
-            
-            // Close the modal when clicking outside the modal content
-            window.addEventListener("click", (event) => {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
-        }
-    }
-
     if (localStorage.getItem("email")) {
         // User is logged in, show the "Add Book" page
         const addBookPage = document.getElementById('addBookForm');
@@ -50,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const loginMessage = document.getElementById('successModal');
         if (loginMessage) {
             loginMessage.style.display = 'block';
-            showSuccessPopup("You are not logged in", "index.html");
+            validations.showSuccessPopup("You are not logged in", "index.html");
         }
     }
 
@@ -83,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         inputBox.addEventListener("blur", function () {
-            validateAuthorBox(inputBox);
+            validations.validateAuthorBox(inputBox);
         });
 
         mainBox?.appendChild(deleteBtn);
@@ -112,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         inputBox.addEventListener("blur", function () {
-            validateGenreBox(inputBox);
+            validations.validateGenreBox(inputBox);
         })
 
         mainBox?.appendChild(deleteBtn);
@@ -124,14 +86,14 @@ document.addEventListener("DOMContentLoaded", function () {
         let error = false as boolean;
 
         // get input value (book title)
-        const bookTitle = validateBookTitle();
+        const bookTitle = validations.validateBookTitle(bookTitleInput);
 
         // get input value (author)
         inputAuthorBoxes = (document.getElementById("authoursInput") as HTMLElement)?.querySelectorAll(".authorInput");
         const authors: string[] = [];
         inputAuthorBoxes.forEach((inputBox) => {
             if (inputBox instanceof HTMLInputElement) {
-                const authorValue = validateAuthorBox(inputBox) as string;
+                const authorValue = validations.validateAuthorBox(inputBox) as string;
                 if (authorValue == "") {
                     error = true;
                     return;
@@ -150,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const genres: string[] = [];
         inputGenreBoxes.forEach((inputBox) => {
             if (inputBox instanceof HTMLInputElement) {
-                const genreValue = validateGenreBox(inputBox) as string;
+                const genreValue = validations.validateGenreBox(inputBox) as string;
                 if (genreValue == "") {
                     error = true;
                     return;
@@ -165,16 +127,16 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
 
         // get input value (publisher)
-        const publisher = validatePublisher();
+        const publisher = validations.validatePublisher(publisherInput);
 
         // get input value (published in)
-        const published = validatePublished();
+        const published = validations.validatePublished(publishedInput);
 
         // get input value (isbn number)
-        const isbn = validateIsbn();
+        const isbn = validations.validateIsbn(IsbnInput);
 
         // get input value (cover url)
-        const coverUrl = validateCoverUrl();
+        const coverUrl = validations.validateCoverUrl(coverUrlInput);
 
         // get input value (abstract)
         const abstractInput = document.getElementById("abstractInput") as HTMLInputElement;
@@ -185,152 +147,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (addedBook["message"]) {
                 // show success message
-                showSuccessPopup(addedBook["message"], `viewBook.html?isbn=${isbn}`);
+                validations.showSuccessPopup(addedBook["message"], `viewBook.html?isbn=${isbn}`);
             }
             else {
                 // show failure
-                showSuccessPopup(addedBook["error"], "");
+                validations.showSuccessPopup(addedBook["error"], "");
             }
         }
         catch (error) {
             // show failure
-            showSuccessPopup(error as string, "");
+            validations.showSuccessPopup(error as string, "");
         }
-    }
-
-    function isValidYear(input: string): boolean {
-        const year = parseInt(input, 10);
-        const currentYear = new Date().getFullYear();
-    
-        return !isNaN(year) && year >= 1000 && year <= currentYear;
-    }
-
-    function isValidURL(input: string): boolean {
-        const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
-        return urlPattern.test(input);
-    }
-
-    function validateIsbnNumber(isbn: string): boolean {
-        const isbn10Pattern = /^(?:\d[\ |-]?){9}[\d|X]$/;
-        const isbn13Pattern = /^(?=(?:\D*\d){13}\D*$)(\d[\ |-]?){13}$/;
-    
-        return isbn10Pattern.test(isbn) || isbn13Pattern.test(isbn);
-    }
-
-    function checkImageUrl(url: string) {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = url;
-      
-          img.onload = function () {
-            resolve(true); // Image loaded successfully
-          };
-      
-          img.onerror = function () {
-            resolve(false); // Error loading image
-          };
-        });
-    }
-
-    function validateBookTitle() {
-        const bookTitle = bookTitleInput.value as string;
-        if (bookTitle == "") {
-            bookTitleInput.setCustomValidity("Please enter a book title");
-            bookTitleInput.reportValidity();
-            return "";
-        }
-        return bookTitle;
-    }
-
-    function validateAuthorBox(inputBox: HTMLInputElement) {
-        const authorValue = (inputBox as HTMLInputElement).value.trim() as string;
-        if (authorValue == "") {
-            inputBox.setCustomValidity("Please enter a book author");
-            inputBox.reportValidity();
-            return;
-        }
-        return authorValue;
-    }
-
-    function validateGenreBox(inputBox: HTMLInputElement) {
-        const genreValue = (inputBox as HTMLInputElement).value.trim() as string;
-        if (genreValue == "") {
-            inputBox.setCustomValidity("Please enter a book genre");
-            inputBox.reportValidity();
-            return;
-        }
-        return genreValue;
-    }
-
-    function validatePublisher() {
-        const publisher = publisherInput.value as string;
-        if (publisher == "") {
-            publisherInput.setCustomValidity("Please enter a publisher");
-            publisherInput.reportValidity();
-            return "";
-        }
-        return publisher;
-    }
-
-    function validatePublished() {
-        const published = publishedInput.value as string;
-        if (published == "") {
-            publishedInput.setCustomValidity("Please enter a published yesr");
-            publishedInput.reportValidity();
-            return "";
-        }
-        else if (!isValidYear(published as string)) {
-            publishedInput.setCustomValidity("Please enter a valid published yesr");
-            publishedInput.reportValidity();
-            return "";
-        }
-        return published;
-    }
-
-    function validateIsbn(){
-        const isbn = IsbnInput.value as string;
-        if (isbn == "") {
-            IsbnInput.setCustomValidity("Please enter an ISBN number");
-            IsbnInput.reportValidity();
-            return "";
-        }
-        else if (!validateIsbnNumber(isbn)) {
-            IsbnInput.setCustomValidity("Please enter a valid ISBN number");
-            IsbnInput.reportValidity();
-            return "";
-        }
-        return isbn;
-    }
-
-    function validateCoverUrl(){
-        const coverUrl = coverUrlInput.value as string;
-        if (coverUrl == "") {
-            coverUrlInput.setCustomValidity("Please enter a cover URL");
-            coverUrlInput.reportValidity();
-            setCoverImgInput(bookCover);
-            return "";
-        }
-        else if (!isValidURL(coverUrl as string)) {
-            coverUrlInput.setCustomValidity("Please enter a valid cover URL");
-            coverUrlInput.reportValidity();
-            setCoverImgInput(bookCover);
-            return "";
-        }
-        else if (!checkImageUrl(coverUrl)) {
-            coverUrlInput.setCustomValidity("Please enter a valid image");
-            coverUrlInput.reportValidity();
-            setCoverImgInput(bookCover);
-            return "";
-        }
-
-        setCoverImgInput(coverUrlInput.value);
-        
-        return coverUrl;
-    }
-
-    function setCoverImgInput(src: string) {
-        const coverUrlImgInput = document.getElementById("coverUrlImgInput") as HTMLImageElement;
-        coverUrlImgInput.src = src;
     }
 
     async function addBook(bookTitle:string, authors: string[], genres: string[], publisher: string, published: string, isbn: string, coverUrl: string, abstract: string) {
@@ -373,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     bookTitleInput.addEventListener("blur", function () {
-        validateBookTitle();
+        validations.validateBookTitle(bookTitleInput);
     });
 
     inputAuthorBoxes.forEach((inputBox) => {
@@ -384,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             inputBox.addEventListener("blur", function () {
-                validateAuthorBox(inputBox);
+                validations.validateAuthorBox(inputBox);
             })
         }
     });
@@ -397,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             inputBox.addEventListener("blur", function () {
-                validateGenreBox(inputBox);
+                validations.validateGenreBox(inputBox);
             })
         }
     });
@@ -407,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     publisherInput.addEventListener("blur", function () {
-        validatePublisher();
+        validations.validatePublisher(publisherInput);
     });
 
     publishedInput.addEventListener("input", function () {
@@ -415,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     publishedInput.addEventListener("blur", function () {
-        validatePublished();
+        validations.validatePublished(publishedInput);
     });
 
     IsbnInput.addEventListener("input", function () {
@@ -423,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     IsbnInput.addEventListener("blur", function () {
-        validateIsbn();
+        validations.validateIsbn(IsbnInput);
     });
 
     coverUrlInput.addEventListener("input", function () {
@@ -431,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     coverUrlInput.addEventListener("blur", function () {
-        validateCoverUrl();
+        validations.validateCoverUrl(coverUrlInput);
     });
 
     const initialAddAuthorBtn = document.getElementById("addAuthor") as HTMLButtonElement;    

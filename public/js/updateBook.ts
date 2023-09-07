@@ -9,6 +9,8 @@ interface Book {
     genres: string[];
 }
 
+const bookCover = "https://via.placeholder.com/200x300.png?text=Book+Cover";
+
 const routeUrl = new URL(window.location.href);
 const isbn = routeUrl.searchParams.get('isbn');
 
