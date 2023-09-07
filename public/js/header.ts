@@ -11,15 +11,20 @@ function loadHeader() {
     const logo_section = document.createElement("section") as HTMLElement;
     logo_section.classList.add("logo");
     
+    // logo hyperlink
+    const logo_a = document.createElement("a") as HTMLAnchorElement;
+    logo_a.href = "index.html";
+    
     // adding the logo 
     const img = document.createElement("img") as HTMLImageElement;
     img.src = "images/logo.png";
-    logo_section.appendChild(img);
+    logo_a.appendChild(img);
 
     // adding the name 
     const h1 = document.createElement("h1") as HTMLHeadingElement;
     h1.textContent = "TripleBooks";
-    logo_section.appendChild(h1);
+    logo_a.appendChild(h1);
+    logo_section.appendChild(logo_a);
 
     header.appendChild(logo_section);
 
