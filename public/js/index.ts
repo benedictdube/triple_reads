@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 					
 					cell.id = "book_item";
 					title.innerText = book.title;
-					author.innerText = book.authors.toString();
+					author.innerText = book.authors.toString().replace(',', ', ');
 					
 					cover.src = book.image;
 					cover.alt = "Book Cover";

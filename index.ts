@@ -249,7 +249,7 @@ app.post('/book', async (req: Request, res: Response) => {
     const { title, isbn, datePublished, abstract, image, authors, genres, publisher, admin } = req.body;
 
     const added = await addBook(title, isbn, datePublished, abstract, image, authors, genres, publisher, admin);
-    res.status(201).json("Book added successfully");
+    res.status(201).json({ message: "Book added successfully" });
   } catch (error) {
     console.error('Error inserting book:', error);
     res.status(500).json({ error: 'Error creating book' });
