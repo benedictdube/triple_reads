@@ -1,7 +1,59 @@
 const bookCover = "https://via.placeholder.com/200x300.png?text=Book+Cover";
 
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("addBookForm") as HTMLElement;
+    // Get the modal and close button
+    const modal = document.getElementById("successModal") as HTMLElement;
+    const closeButton = document.querySelector(".close") as HTMLSpanElement;
+
+    // Function to show the modal with a success message
+    function showSuccessPopup(message: string, showButton: string) {
+        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
+        successMessage.textContent = message;
+        modal.style.display = "block";
+
+        const popupBtn = document.getElementById("modelBtn") as HTMLButtonElement;
+        if (showButton.length > 0) {
+            popupBtn.style.display = "initial";
+            popupBtn.addEventListener("click", () => {
+                window.location.href = showButton;
+            });
+
+            closeButton.addEventListener("click", () => {
+                window.location.href = showButton;
+            });
+        }
+        else {
+            popupBtn.style.display = "none";
+
+            // Close the modal when the close button is clicked
+            closeButton.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+            
+            // Close the modal when clicking outside the modal content
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
+    }
+
+    if (localStorage.getItem("email")) {
+        // User is logged in, show the "Add Book" page
+        const addBookPage = document.getElementById('addBookForm');
+        if (addBookPage) {
+            addBookPage.style.display = 'block';
+        }
+    } else {
+        // User is not logged in, optionally show a message or redirect to the login page
+        const loginMessage = document.getElementById('successModal');
+        if (loginMessage) {
+            loginMessage.style.display = 'block';
+            showSuccessPopup("You are not logged in", "index.html");
+        }
+    }
+
     const bookTitleInput = document.getElementById("bookTitleInput") as HTMLInputElement;
     let inputAuthorBoxes = (document.getElementById("authoursInput") as HTMLElement)?.querySelectorAll(".authorInput");
     let inputGenreBoxes = (document.getElementById("genresInput") as HTMLInputElement)?.querySelectorAll(".genreInput");
@@ -9,30 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const publishedInput = document.getElementById("publishedInput") as HTMLInputElement;
     const IsbnInput = document.getElementById("IsbnInput") as HTMLInputElement;
     const coverUrlInput = document.getElementById("coverUrlInput") as HTMLInputElement; 
-
-    // Get the modal and close button
-    const modal = document.getElementById("successModal") as HTMLElement;
-    const closeButton = document.querySelector(".close") as HTMLSpanElement;
-
-    // Function to show the modal with a success message
-    function showSuccessPopup(message: string) {
-        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
-        successMessage.textContent = message;
-        modal.style.display = "block";
-    }
-
-    // Close the modal when the close button is clicked
-    closeButton.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-    
-    // Close the modal when clicking outside the modal content
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
-
 
     function createInputAuthorBox() {
         const mainBox = document.getElementById("authoursInput") as HTMLElement;
@@ -152,16 +180,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const abstractInput = document.getElementById("abstractInput") as HTMLInputElement;
         const abstract = abstractInput.value as string;
     
-        const addedBook = addBook(bookTitle, authors, genres, publisher, published, isbn, coverUrl, abstract);
-        if (addedBook) {
-            // show success message
-            showSuccessPopup("Book added successfully!");
-            // TODO: redirect to view full page
-        }
-        else {
-            // show failure
-            showSuccessPopup("Book failed to add!");
+        try {
+            const addedBook = await addBook(bookTitle, authors, genres, publisher, published, isbn, coverUrl, abstract);
 
+            if (addedBook["message"]) {
+                // show success message
+                showSuccessPopup(addedBook["message"], `viewBook.html?isbn=${isbn}`);
+            }
+            else {
+                // show failure
+                showSuccessPopup(addedBook["error"], "");
+            }
+        }
+        catch (error) {
+            // show failure
+            showSuccessPopup(error as string, "");
         }
     }
 
@@ -300,19 +333,39 @@ document.addEventListener("DOMContentLoaded", function () {
         coverUrlImgInput.src = src;
     }
 
-    function addBook(bookTitle:string, authors: string[], genres: string[], publisher: string, published: string, isbn: string, coverUrl: string, abstract: string) {
-        console.log("book title " + bookTitle);
-        console.log("authors " + authors);
-        console.log("genres " + genres);
-        console.log("publisher " + publisher);
-        console.log("published " + published);
-        console.log("ISBN number " + isbn);
-        console.log("cover url " + coverUrl);
-        console.log("abstract " + abstract);
+    async function addBook(bookTitle:string, authors: string[], genres: string[], publisher: string, published: string, isbn: string, coverUrl: string, abstract: string) {
+        const requestBody = {
+            title: bookTitle, 
+            isbn: isbn, 
+            abstract: abstract, 
+            image: coverUrl, 
+            authors: authors, 
+            genres: genres, 
+            publisher: publisher, 
+            datePublished: published, 
+            admin: localStorage.getItem('email')
+        }
 
-        // TODO: post the book!
-        
-        return true;
+        const response = await fetch('/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                return response.json();
+            }
+        })
+        .catch(function (error) {
+            throw error;
+        });
+
+        return response; 
     }
 
     bookTitleInput.addEventListener("input", function () {
