@@ -1,47 +1,112 @@
 interface Book {
     title: string;
     isbn: string;
-    datePublished: string;
-    abs: string;
+    publishedYear: string;
+    abstract: string;
     image: string;
     publisher: string;
     authors: string[];
     genres: string[];
+    adminEmail: string;
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
+    // Get the modal and close button
+    const modal = document.getElementById("successModal") as HTMLElement;
+    const closeButton = document.querySelector(".close") as HTMLSpanElement;
+
+    // Function to show the modal with a success message
+    function showSuccessPopup(message: string) {
+        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
+        successMessage.textContent = message;
+        modal.style.display = "block";
+    }
+
+    // Close the modal when the close button is clicked
+    closeButton.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+    
+    // Close the modal when clicking outside the modal content
+    window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    if (localStorage.getItem("email")) {
+        // User is logged in, show the buttons
+        var btnClasses = ["delete-btn", "submit-btn"];
+        var btnNames = ["Delete", "Edit"];
+        
+        const leftSection = document.getElementById("leftSection") as HTMLElement;
+
+        btnNames.forEach((btnName, index) => {
+            const btn = document.createElement("button") as HTMLButtonElement;
+            btn.type = "button";
+            btn.classList.add("btn");
+            btn.classList.add(btnClasses[index]);
+            btn.textContent = btnName;
+            leftSection.appendChild(btn);
+        });
+    }
+
     const routeUrl = new URL(window.location.href);
-
-    const isbnString = routeUrl.searchParams.get('isbn') as String;
-	
-	const title = document.getElementById("book_title") as HTMLElement;
-	const authors = document.getElementById("book_authors") as HTMLElement;
-	const isbnBook = document.getElementById("book_isbn") as HTMLElement;
-	const genres = document.getElementById("book_genres") as HTMLElement;
-	const publishInfo = document.getElementById("book_publishInfo") as HTMLElement;
-	const book_ab = document.getElementById("book_abstract") as HTMLElement;
-	const cover = document.getElementById("book_cover") as HTMLImageElement;
-	isbnBook.innerText = "ISBN: " + isbnString;
-
-    const url = `/books/${isbnString}`;
+    const isbn = routeUrl.searchParams.get('isbn') as string;
 
     try {
-        const response = await fetch(url);
-        const bookData = await response.json();
+        const books = await getBook(isbn) as unknown as Book[];
+        if (books)
+        {
+            const book = books[0] as Book;
+            console.log(book);
 
-        if (response.ok) {
-            console.log(bookData);     
-            title.innerText = bookData[0].title;
-			authors.innerText = bookData[0].authors.toString();
-			genres.innerText = bookData[0].genres.toString();
-			publishInfo.innerText = bookData[0].publisher;
-			book_ab.innerText = bookData[0].abs;
-			cover.src = bookData[0].image;
+            const coverBook = document.getElementById("coverBook") as HTMLImageElement;
+            coverBook.src = book.image;
 
-        } else {
-            console.error('Book not found:');
+            const bookTitle = document.getElementById("bookTitle") as HTMLHeadingElement;
+            bookTitle.textContent = book.title;
+
+            const authors = document.getElementById("authors") as HTMLHeadingElement;
+            authors.textContent = book.authors.toString().replace(',', ',');
+
+            const isbn = document.getElementById("isbn") as HTMLParagraphElement;
+            isbn.textContent = "ISBN: " + book.isbn;
+
+            const genres = document.getElementById("genres") as HTMLParagraphElement;
+            genres.textContent = "Genre: " + book.genres.toString().replace(',', ', ');
+
+            const publishInfo = document.getElementById("publishInfo") as HTMLParagraphElement;
+            publishInfo.textContent = "Published By " + book.publisher + ", " + book.publishedYear + ".";
+
+            const abstract = document.getElementById("abstract") as HTMLParagraphElement;
+            abstract.textContent = book.abstract;
         }
-    } catch (error) {
-        console.error('Error retrieving book:', error);
     }
+    catch (error) {
+        showSuccessPopup(error as string);
+    }
+
+    async function getBook(isbn: string) : Promise<Book[]>{
+        const response = await fetch(`/books/${isbn}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                return response.json();
+            }
+        })
+        .catch(function (error) {
+            throw error;
+        });
+
+        return response; 
+    }
+
 })
