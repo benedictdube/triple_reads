@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Triple Reads</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/header.css">
+		<link rel="stylesheet" href="css/footer.css">
+		<link rel="icon" type="image/x-icon" href="images/logo.png">
+
+		<script src="js/header.js"></script>
+		<script src="js/footer.js"></script>
+		<script src="js/manageBooks.js"></script>
+	</head>
+	
+	<body onload="loadPage()">
+		<header id="header"></header>
+		
+		<main>
+            <section id="successModal" class="modal">
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <p id="successMessage" class="success-message">This is my message</p>
+                </div>
+            </section>
+
+			<section id="book_grid" style="display: none;"></section>
+		</main>
+		
+		<footer id="footer"></footer>
+	</body>
+	
+</html>

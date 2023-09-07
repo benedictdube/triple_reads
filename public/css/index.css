@@ -80,8 +80,14 @@ main h1 {
 	color: var(--heading-color)
 }
 
+#book_grid a{
+	text-decoration: none;
+}
+
 #book_grid #book_item img {
 	margin-bottom: 15px;
+	width: 50%;
+	height: 100%;
 }
 
 #book_grid #book_item h1 {
@@ -109,11 +115,5 @@ main h1 {
 
 	#searchForm {
 		width: 100% !important;
-	}
-}
-
-@media screen and (max-width: 768px) {
-	#book_grid {
-		grid-template-columns: 1fr;
 	}
 }
