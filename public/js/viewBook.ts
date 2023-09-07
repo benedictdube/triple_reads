@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             bookTitle.textContent = book.title;
 
             const authors = document.getElementById("authors") as HTMLHeadingElement;
-            authors.textContent = book.authors.toString().replace(',', ',');
+            authors.textContent = book.authors.toString().replace(',', ', ');
 
             const isbn = document.getElementById("isbn") as HTMLParagraphElement;
             isbn.textContent = "ISBN: " + book.isbn;

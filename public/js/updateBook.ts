@@ -151,8 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         mainBox?.appendChild(deleteBtn);
-
-        inputBox.focus();
     }
 
     function createInputGenereBox(index: number) {
@@ -189,8 +187,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
 
         mainBox?.appendChild(deleteBtn);
-
-        inputBox.focus();
     }
 
     async function submitUpdateBook() {
@@ -369,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
     async function updateBook(bookTitle: string, authors: string[], genres: string[], publisher: string, published: string, coverUrl: string, abstract: string) {
         //Need to get logged in admin to add to book and the isbn       
 
-        const admin = 'test@admin.com';
+        const admin = localStorage.getItem("email") as string;
 
         const bookAdded = await updateBookCall(bookTitle, authors, genres, publisher, published, coverUrl, abstract, admin);
 
