@@ -34,6 +34,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
+    const routeUrl = new URL(window.location.href);
+    const isbn = routeUrl.searchParams.get('isbn') as string;
+
     if (localStorage.getItem("email")) {
         // User is logged in, show the buttons
         var btnClasses = ["delete-btn", "submit-btn"];
@@ -47,18 +50,20 @@ document.addEventListener("DOMContentLoaded", async function () {
             btn.classList.add("btn");
             btn.classList.add(btnClasses[index]);
             btn.textContent = btnName;
+
+            if (btnName == "Edit") {
+                btn.addEventListener("click", () => {
+                    window.location.href = `updateBook.html?isbn=${isbn}`;
+                });
+            }
             leftSection.appendChild(btn);
         });
     }
 
-    const routeUrl = new URL(window.location.href);
-    const isbn = routeUrl.searchParams.get('isbn') as string;
-
     try {
-        const books = await getBook(isbn) as unknown as Book[];
-        if (books)
+        const book = await getBook(isbn) as unknown as Book;
+        if (book)
         {
-            const book = books[0] as Book;
             console.log(book);
 
             const coverBook = document.getElementById("coverBook") as HTMLImageElement;
@@ -68,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             bookTitle.textContent = book.title;
 
             const authors = document.getElementById("authors") as HTMLHeadingElement;
-            authors.textContent = book.authors.toString().replace(',', ',');
+            authors.textContent = book.authors.toString().replace(',', ', ');
 
             const isbn = document.getElementById("isbn") as HTMLParagraphElement;
             isbn.textContent = "ISBN: " + book.isbn;
@@ -87,8 +92,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         showSuccessPopup(error as string);
     }
 
-    async function getBook(isbn: string) : Promise<Book[]>{
-        const response = await fetch(`/books/${isbn}`, {
+    async function getBook(isbn: string) : Promise<Book>{
+        const response = await fetch(`/book/${isbn}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

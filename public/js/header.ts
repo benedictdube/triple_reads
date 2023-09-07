@@ -47,8 +47,8 @@ function loadHeader() {
         menu_section.appendChild(dropdown_btn);
 
         // dropdown list 
-        const dropdown_list : string[] = ["Manage Books", "Log Out", "Add Books"];
-        const dropdown_list_href : string[] = ["#", "#", 'addBook.html'];
+        const dropdown_list : string[] = ["Add Books", "Manage Books", "Log Out"];
+        const dropdown_list_href : string[] = ["addBook.html", "manageBooks.html", "#"];
         const ul = document.createElement("ul") as HTMLUListElement;
         ul.classList.add("dropdown-content");
         ul.setAttribute("id", "dropdownContent");

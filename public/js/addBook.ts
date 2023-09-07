@@ -54,8 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-
-    const form = document.getElementById("addBookForm") as HTMLElement;
     const bookTitleInput = document.getElementById("bookTitleInput") as HTMLInputElement;
     let inputAuthorBoxes = (document.getElementById("authoursInput") as HTMLElement)?.querySelectorAll(".authorInput");
     let inputGenreBoxes = (document.getElementById("genresInput") as HTMLInputElement)?.querySelectorAll(".genreInput");
@@ -187,9 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (addedBook["message"]) {
                 // show success message
-                showSuccessPopup(addedBook["message"], "index.html");
-                
-                // TODO: redirect to view full page
+                showSuccessPopup(addedBook["message"], `viewBook.html?isbn=${isbn}`);
             }
             else {
                 // show failure
