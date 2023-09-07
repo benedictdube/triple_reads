@@ -59,3 +59,79 @@ hr {
 .delete-btn {
     margin-right: 0px;
 }
+
+#popup {
+    opacity: 1;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    background-color:white;
+    text-align: center;
+}
+
+.popup-btn{
+    background-color: #EA4C89;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#popupContent {
+    display:none;
+    border-radius: 25px;
+    max-width: 340px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    background-color:white;
+    text-align: center;
+    position:fixed;
+    padding-top: 1.5em;
+    padding-bottom: 3.5em;
+    padding-left:2em;
+    padding-right:2em;
+}
+
+#continueDelete {
+    position:absolute;
+    left:2.5em;
+    background-color: green;
+    display: block;
+}
+
+#cancelDelete{
+    position:absolute;
+    right:2.5em;
+    background-color: red;
+    display: block;
+}
+#bookInfo{
+    opacity: 0.3;
+}
+#errorMessage{
+    color:red;
+    display:none;   
+}
