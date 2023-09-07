@@ -131,3 +131,7 @@ hr {
 #bookInfo{
     opacity: 0.3;
 }
+#errorMessage{
+    color:red;
+    display:none;   
+}

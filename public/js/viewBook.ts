@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     const popupContent = document.getElementById("popupContent") as HTMLElement;
     const btnContinue = document.getElementById("continueDelete") as HTMLElement;
     const btnCancel = document.getElementById("cancelDelete") as HTMLElement;
-    
+    const errorParagraph = document.getElementById('errorMessage') as HTMLElement;    
     btnDelete.onclick = () =>{
         popupContent.style.display = "block";
     }
@@ -19,13 +19,18 @@ document.addEventListener("DOMContentLoaded", () =>{
                 window.location.href = "/";        
             }
             else
-                throw Error("Couldn't delete the book");
+                throw Error();
         })
-        .catch(()=>console.error("Couldn't delete the book"));
+        .catch(()=>{
+            errorParagraph.style.display = "block";
+            errorParagraph.textContent = "Something went wrong. The book coudn't not be deleted.";
+        });
     }
 
     btnCancel.onclick = () => {
         popupContent.style.display = "none";
+        errorParagraph.style.display = "none";
+        errorParagraph.textContent = "";
     }
 
 });
