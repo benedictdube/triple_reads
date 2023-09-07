@@ -8,7 +8,7 @@ interface Book {
     authors: string[];
     genres: string[];
     adminEmail: string;
-  }
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
     // Get the modal and close button
@@ -56,29 +56,34 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         const books = await searchBooks() as Book[];
 
-        books.forEach(function (book) {
-            const cell = document.createElement("article") as HTMLElement;
-            const a = document.createElement("a") as HTMLAnchorElement;
-            const cover = document.createElement("img") as HTMLImageElement;
-            const title = document.createElement("h1") as HTMLHeadingElement;
-            const author = document.createElement("h3") as HTMLHeadingElement;
-            
-            cell.id = "book_item";
-            title.innerText = book.title;
-            author.innerText = book.authors.toString().replace(',', ', ');
-            cover.src = book.image;
-            cover.alt = "Book Cover";
-            cover.id = "cover";
-            cover.width = 200;
-            a.href = "viewBook.html?isbn=" + book.isbn;
-            
-            a.appendChild(cover);
-            a.appendChild(title);
-            a.appendChild(author);
-            cell.appendChild(a);
-            
-            grid.appendChild(cell);
-        })
+        if (books.length == 0) {
+            grid.textContent = "No books found";
+        }
+        else {
+            books.forEach(function (book) {
+                const cell = document.createElement("article") as HTMLElement;
+                const a = document.createElement("a") as HTMLAnchorElement;
+                const cover = document.createElement("img") as HTMLImageElement;
+                const title = document.createElement("h1") as HTMLHeadingElement;
+                const author = document.createElement("h3") as HTMLHeadingElement;
+                
+                cell.id = "book_item";
+                title.innerText = book.title;
+                author.innerText = book.authors.toString().replace(',', ', ');
+                cover.src = book.image;
+                cover.alt = "Book Cover";
+                cover.id = "cover";
+                cover.width = 200;
+                a.href = "viewBook.html?isbn=" + book.isbn;
+                
+                a.appendChild(cover);
+                a.appendChild(title);
+                a.appendChild(author);
+                cell.appendChild(a);
+                
+                grid.appendChild(cell);
+            });
+        }
     }
     catch (error) {
         showSuccessPopup(error as string);

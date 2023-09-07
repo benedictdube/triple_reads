@@ -121,6 +121,9 @@ main {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	grid-gap: 20px;
+
+    font-size: 24px;
+	text-align: center;
 }
 
 #book_grid #book_item {
@@ -132,7 +135,7 @@ main {
 	color: var(--heading-color);
 }
 
-#book_grid #book_item a {
+#book_grid a {
     text-decoration: none;
     color: inherit;
 }
