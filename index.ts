@@ -267,7 +267,7 @@ app.post('/book', async (req: Request, res: Response) => {
     const exists = data.boolean;
 
     if (exists) {
-      return res.status(404).json({ error: 'Book already exists with that isbn' });
+      return res.status(409).json({ error: 'Book already exists with that isbn' });
     }
 
     const adminString = await getAdminID(admin);
