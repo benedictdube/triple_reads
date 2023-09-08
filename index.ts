@@ -359,7 +359,7 @@ async function addBook(title: string, isbn: string, publishedYear: string, abstr
       }
     `;
 
-  const { data } = await axios.post(fusekiUrl, null, {
+  const { data } = await axios.post(fusekiUrlUpdate, null, {
     params: {
       query: checkQuery,
     },
