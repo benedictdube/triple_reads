@@ -139,3 +139,10 @@ hr {
     color:red;
     display:none;   
 }
+
+@media screen and (max-width: 1200px) {
+    .btn {
+        width: 100% !important;
+        float: left !important;
+    }
+}

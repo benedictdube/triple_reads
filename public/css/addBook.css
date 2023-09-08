@@ -25,6 +25,8 @@ main h1 {
 .input-container {
     width: 100%;
     margin-bottom: 10px;
+
+    overflow: hidden;
 }
 
 main label {
@@ -95,8 +97,10 @@ main textarea {
 }
 
 @media screen and (max-width: 1200px) {
+    main input,
+    main textarea,
     #coverUrlInput {
-        width: 100%;
+        width: 90%;
     }
 
     #coverUrlImgInput {
@@ -105,7 +109,7 @@ main textarea {
     }
 
     .input-add {
-        width: 100%;
+        width: 90%;
     }
 
     .delete-btn {
@@ -114,7 +118,9 @@ main textarea {
     }
 
     .delete-btn, 
-    .add-btn {
+    .add-btn,
+    .submit-btn {
         float: left;
+        width: 93% !important;
     }
 } 
