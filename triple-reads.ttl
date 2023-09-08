@@ -190,3 +190,22 @@ ex:978-1524763169  a       schema:Book;
         schema:publisher      "Crown Publishing Group";
         schema:title          "A Promised Land" .
 
+ex:History  a        schema:Genre;
+        schema:name  "History" .
+
+ex:y_harari  a        schema:Person;
+        schema:name  "Yuval Noah Harari" .
+
+
+ex:978-0062316097  a       schema:Book;
+        ex:addedBy            ex:raagacom;
+        schema:abstract       "Sapiens explores the history and impact of Homo sapiens on the world, from ancient times to the present.";
+        schema:author         ex:y_harari;
+        schema:dateAdded      "Wed Sep 06 2023 19:00:09 GMT+0200 (South Africa Standard Time)";
+        schema:genre          ex:History ;
+        schema:image          "https://m.media-amazon.com/images/I/41lZKXt1+ML._SL500_.jpg";
+        schema:isbn           "978-0062316097";
+        schema:publishedYear  "2015";
+        schema:publisher      "Harper";
+        schema:title          "Sapiens: A Brief History of Humankind	" .
+
