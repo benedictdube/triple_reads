@@ -16,10 +16,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const closeButton = document.querySelector(".close") as HTMLSpanElement;
 
     // Function to show the modal with a success message
-    function showSuccessPopup(message: string) {
+    function showSuccessPopup(message: string, showButton: string) {
         const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
         successMessage.textContent = message;
         modal.style.display = "block";
+
+        if (showButton.length > 0) {
+            closeButton.addEventListener("click", () => {
+                window.location.href = showButton;
+            });
+        }
     }
 
     // Close the modal when the close button is clicked
@@ -66,11 +72,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     try {
+        const leftSection = document.getElementById("leftSection") as HTMLElement;
+        const rightSection = document.getElementById("rightSection") as HTMLElement;
+        if (!validateIsbnNumber(isbn)) {
+            showSuccessPopup("Invalid ISBN", "index.html");
+            return;
+        }
+        else {
+            leftSection.style.display = "flex";
+            rightSection.style.display = "block";
+        }
+
         const book = await getBook(isbn) as unknown as Book;
         if (book)
         {
-            console.log(book);
-
             const coverBook = document.getElementById("coverBook") as HTMLImageElement;
             coverBook.src = book.image;
 
@@ -94,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
     catch (error) {
-        showSuccessPopup(error as string);
+        showSuccessPopup(error as string, "");
     }
 
     async function getBook(isbn: string) : Promise<Book>{
@@ -153,5 +168,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         popupContent.style.display = "none";
         errorParagraph.style.display = "none";
         errorParagraph.textContent = "";
+    }
+
+    function validateIsbnNumber(isbn: string): boolean {
+        const isbn10Pattern = /^(?:\d[\ |-]?){9}[\d|X]$/;
+        const isbn13Pattern = /^(?=(?:\D*\d){13}\D*$)(\d[\ |-]?){13}$/;
+    
+        return isbn10Pattern.test(isbn) || isbn13Pattern.test(isbn);
     }
 })

@@ -10,7 +10,7 @@ interface Book {
 }
 
 const routeUrl = new URL(window.location.href);
-const isbn = routeUrl.searchParams.get('isbn');
+const isbn = routeUrl.searchParams.get('isbn') as string;
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchAndDisplayBookDetails();
@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const url = `/book/${isbn}`;
 
         try {
+            if (!validateIsbnNumber(isbn)) {
+                showSuccessPopup("Invalid ISBN");
+            }
             const response = await fetch(url);
             const bookData = await response.json();
 
@@ -485,5 +488,12 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             return false;
         }
+    }
+
+    function validateIsbnNumber(isbn: string): boolean {
+        const isbn10Pattern = /^(?:\d[\ |-]?){9}[\d|X]$/;
+        const isbn13Pattern = /^(?=(?:\D*\d){13}\D*$)(\d[\ |-]?){13}$/;
+    
+        return isbn10Pattern.test(isbn) || isbn13Pattern.test(isbn);
     }
 })
