@@ -28,21 +28,36 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = showButton;
             });
         }
+        else {
+            // Close the modal when the close button is clicked
+            closeButton.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+            // Close the modal when clicking outside the modal content
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
     }
 
-    // Close the modal when the close button is clicked
-    closeButton.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-
-    // Close the modal when clicking outside the modal content
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
+    if (localStorage.getItem("email")) {
+        // User is logged in, show the "Add Book" page
+        const updateBookForm = document.getElementById('updateBookForm');
+        if (updateBookForm) {
+            updateBookForm.style.display = 'block';
+            fetchAndDisplayBookDetails();
         }
-    });
-
-    fetchAndDisplayBookDetails();
+    } else {
+        // User is not logged in, optionally show a message or redirect to the login page
+        const loginMessage = document.getElementById('successModal');
+        if (loginMessage) {
+            loginMessage.style.display = 'block';
+            showSuccessPopup("You are not logged in", "index.html");
+        }
+    }
 
     async function fetchAndDisplayBookDetails() {
         const url = `/book/${isbn}`;

@@ -93,3 +93,9 @@
 .show {
     display: block;
 }
+
+@media screen and (max-width: 1200px) {
+    .header, main {
+        padding: 1em 1em !important;
+    }
+}

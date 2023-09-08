@@ -34,6 +34,7 @@ main {
 	border: none;
 	cursor: pointer;
 	width: 100%;
+	font-size: 22px;
 }
 
 #loginForm button:hover {
