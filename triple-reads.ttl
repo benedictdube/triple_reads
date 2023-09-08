@@ -151,3 +151,24 @@ ex:978-1524763138  a       schema:Book;
         schema:publisher      "Crown Publishing Group";
         schema:title          "Becoming" .
 
+ex:t_noal  a        schema:Person;
+        schema:name  "Trevor Noah" .
+
+ex:Biography  a        ex:Genre;
+        schema:name  "Biography" .
+
+ex:Humor  a        ex:Genre;
+        schema:name  "Humor" 
+
+ex:978-0399588174  a       schema:Book;
+        ex:addedBy            ex:raagacom;
+        schema:abstract       "Trevor Noah, the host of The Daily Show, shares his coming-of-age story as a mixed-race child in apartheid-era South Africa.";
+        schema:author         ex:t_noal;
+        schema:dateAdded      "Wed Sep 06 2023 19:00:09 GMT+0200 (South Africa Standard Time)";
+        schema:genre          ex:Biography, ex:Humor ;
+        schema:image          "https://media.loot.co.za/images/x400/649429321585179215.jpg?w=400&h=500&t=embed";
+        schema:isbn           "978-0399588174";
+        schema:publishedYear  "2016";
+        schema:publisher      "Spiegel & Grau";
+        schema:title          "Born a Crime: Stories from a South African Childhood" .
+
