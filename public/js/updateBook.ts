@@ -41,14 +41,14 @@ document.addEventListener("DOMContentLoaded", function () {
             modal.style.display = "none";
         }
     });
-    
+
     fetchAndDisplayBookDetails();
 
     async function fetchAndDisplayBookDetails() {
         const url = `/book/${isbn}`;
+        const updateBookForm = document.getElementById("updateBookForm") as HTMLElement;
 
         try {
-            const updateBookForm = document.getElementById("updateBookForm") as HTMLElement;
             if (!validateIsbnNumber(isbn)) {
                 showSuccessPopup("Invalid ISBN", "index.html");
                 return;
@@ -118,7 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 showSuccessPopup("Book not found with that ISBN", "");
             }
         } catch (error) {
-            showSuccessPopup("Error fetching book details", "");
+            showSuccessPopup("Error fetching book details", "index.html");
+            updateBookForm.style.display = "none";
         }
     }
 
