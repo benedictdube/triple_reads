@@ -158,7 +158,7 @@ ex:Biography  a        ex:Genre;
         schema:name  "Biography" .
 
 ex:Humor  a        ex:Genre;
-        schema:name  "Humor" 
+        schema:name  "Humor" .
 
 ex:978-0399588174  a       schema:Book;
         ex:addedBy            ex:raagacom;
@@ -171,4 +171,22 @@ ex:978-0399588174  a       schema:Book;
         schema:publishedYear  "2016";
         schema:publisher      "Spiegel & Grau";
         schema:title          "Born a Crime: Stories from a South African Childhood" .
+
+ex:b_obama  a        schema:Person;
+        schema:name  "Barack Obama" .
+
+ex:Memoir  a        ex:Genre;
+        schema:name  "Memoir" .
+
+ex:978-1524763169  a       schema:Book;
+        ex:addedBy            ex:raagacom;
+        schema:abstract       "Barack Obama's memoir covers his early political career, presidency, and the challenges and decisions he faced.";
+        schema:author         ex:b_obama;
+        schema:dateAdded      "Wed Sep 06 2023 19:00:09 GMT+0200 (South Africa Standard Time)";
+        schema:genre          ex:Autobiography, ex:Memoir ;
+        schema:image          "https://media.loot.co.za/static/gallery/d/f/t/dftn-7055-g770/dftn-7055-g770.0.jpg?w=400&h=500&t=embed";
+        schema:isbn           "978-1524763169";
+        schema:publishedYear  "2020";
+        schema:publisher      "Crown Publishing Group";
+        schema:title          "A Promised Land" .
 
