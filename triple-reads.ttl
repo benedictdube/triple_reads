@@ -1,0 +1,153 @@
+@prefix ex:     <http://example.org/> .
+@prefix schema: <http://schema.org/> .
+
+ex:admin1  ex:hasEmail  "admin@example.com" .
+
+ex:Fantasy  a        ex:Genre;
+        schema:name  "Fantasy" .
+
+ex:Genre  a          ex:Genre;
+        schema:name  "Genre" .
+
+ex:Mystery  a        ex:Genre;
+        schema:name  "Mystery" .
+
+ex:author1  a        schema:Person;
+        schema:name  "John Author" .
+
+ex:author2  a        schema:Person;
+        schema:name  "Jane Writer" .
+
+ex:Author123  a      schema:Person;
+        schema:name  "Author Name" .
+
+ex:Genre123  a       schema:Genre;
+        schema:name  "Fiction" .
+
+ex:Publisher123  a   schema:Organization;
+        schema:name  "Publisher Name" .
+
+ex:Me_yes  a         schema:Person;
+        schema:name  "Me yes" .
+
+ex:You  a            schema:Person;
+        schema:name  "You" .
+
+ex:Harry  a          schema:Person;
+        schema:name  "Harry" .
+
+ex:Cool  a           ex:Genre;
+        schema:name  "Cool" .
+
+ex:adminexampleco  ex:hasEmail  "admin@example.co" .
+
+ex:Me   ex:hasEmail  "Me" .
+
+ex:kylegmailcom  ex:hasEmail  "kyle@gmail.com" .
+
+ex:harryPotterAdmingmailcom
+        ex:hasEmail  "harryPotterAdmin@gmail.com" .
+
+ex:JK_Rowling  a     schema:Person;
+        schema:name  "JK Rowling" .
+
+ex:JRR  a            schema:Person;
+        schema:name  "JRR" .
+
+
+ex:updategmailcom  ex:hasEmail  "update@gmail.com" .
+
+ex:Test  a           ex:Genre , schema:Person;
+        schema:name  "Test" .
+
+ex:YOu  a            schema:Person;
+        schema:name  "YOu" .
+
+ex:No   a            schema:Person;
+        schema:name  "No" .
+
+ex:Update  a         ex:Genre;
+        schema:name  "Update" .
+
+ex:J.K_Rowling  a    schema:Person;
+        schema:name  "J.K Rowling" .
+
+ex:Other  a          schema:Person;
+        schema:name  "Other" .
+
+ex:yeyecom  ex:hasEmail  "ye@ye.com" .
+
+ex:hjk  a            schema:Person;
+        schema:name  "hjk" .
+
+ex:jkh  a            schema:Person;
+        schema:name  "jkh" .
+
+ex:kjh  a            ex:Genre;
+        schema:name  "kjh" .
+
+ex:admintestgmail  ex:hasEmail  "admin@test.gmail" .
+
+ex:Test_again  a     schema:Person;
+        schema:name  "Test again" .
+
+ex:Test_2  a         schema:Person;
+        schema:name  "Test 2" .
+
+ex:Please  a         ex:Genre;
+        schema:name  "Please" .
+
+ex:kyletriplereadscom
+        ex:hasEmail  "kyle@triplereads.com" .
+
+ex:978-0-7475-3269-9  a       schema:Book;
+        ex:addedBy            ex:testadmincom;
+        schema:abstract       "They later discover that Voldemort has been killing unicorns in the Forbidden Forest and drinking their blood, another way to achieve immortality.";
+        schema:author         ex:J.K_Rowling , ex:Other , ex:Other_3 , ex:Other_2;
+        schema:dateAdded      "Wed Sep 06 2023 19:00:09 GMT+0200 (South Africa Standard Time)";
+        schema:genre          ex:Fantasy , ex:Mystery , ex:Magic , ex:Whimsy;
+        schema:image          "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg";
+        schema:isbn           "978-0-7475-3269-9";
+        schema:publishedYear  "1997";
+        schema:publisher      "Bloomsbury (UK)";
+        schema:title          "Harry Potter and the Philosopher's Stone" .
+
+ex:testadmincom  ex:hasEmail  "test@admin.com" .
+
+ex:Other_3  a        schema:Person;
+        schema:name  "Other 3" .
+
+ex:Other_2  a        schema:Person;
+        schema:name  "Other 2" .
+
+ex:Magic  a          ex:Genre;
+        schema:name  "Magic" .
+
+ex:Whimsy  a         ex:Genre;
+        schema:name  "Whimsy" .
+
+ex:kyleadmincom  ex:hasEmail  "kyle@admin.com" .
+
+
+
+ex:raagacom  ex:hasEmail  "raaga@bbd.co.za" .
+
+ex:m_obama  a        schema:Person;
+        schema:name  "Michelle Obama" .
+
+ex:Autobiography  a        ex:Genre;
+        schema:name  "Autobiography" .
+
+
+ex:978-1524763138  a       schema:Book;
+        ex:addedBy            ex:raagacom;
+        schema:abstract       "The memoir by the former First Lady of the United States, Michelle Obama, reflects on her experiences and life journey.";
+        schema:author         ex:m_obama;
+        schema:dateAdded      "Wed Sep 06 2023 19:00:09 GMT+0200 (South Africa Standard Time)";
+        schema:genre          ex:Autobiography;
+        schema:image          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1528206996i/38746485.jpg";
+        schema:isbn           "978-1524763138";
+        schema:publishedYear  "2018";
+        schema:publisher      "Crown Publishing Group";
+        schema:title          "Becoming" .
+
