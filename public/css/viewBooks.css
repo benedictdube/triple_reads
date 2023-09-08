@@ -3,6 +3,10 @@ main {
     justify-content: space-between;
 }
 
+#leftSection, #rightSection {
+    display: none;
+}
+
 .left-section {
     display: flex;
     flex-direction: column;

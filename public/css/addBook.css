@@ -1,4 +1,4 @@
-#addBookForm {
+#addBookForm, #updateBookForm {
     display: none;
 }
 

@@ -16,10 +16,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const closeButton = document.querySelector(".close") as HTMLSpanElement;
 
     // Function to show the modal with a success message
-    function showSuccessPopup(message: string) {
+    function showSuccessPopup(message: string, showButton: string) {
         const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
         successMessage.textContent = message;
         modal.style.display = "block";
+
+        if (showButton.length > 0) {
+            closeButton.addEventListener("click", () => {
+                window.location.href = showButton;
+            });
+        }
     }
 
     // Close the modal when the close button is clicked
@@ -66,11 +72,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     try {
+        const leftSection = document.getElementById("leftSection") as HTMLElement;
+        const rightSection = document.getElementById("rightSection") as HTMLElement;
         const book = await getBook(isbn) as unknown as Book;
+        if (!validateIsbnNumber(isbn) || typeof book === 'string') {
+            showSuccessPopup("Invalid ISBN", "index.html");
+            return;
+        }
+        else {
+            leftSection.style.display = "flex";
+            rightSection.style.display = "block";
+        }
+        
         if (book)
         {
-            console.log(book);
-
             const coverBook = document.getElementById("coverBook") as HTMLImageElement;
             coverBook.src = book.image;
 
@@ -94,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
     catch (error) {
-        showSuccessPopup(error as string);
+        showSuccessPopup(error as string, "");
     }
 
     async function getBook(isbn: string) : Promise<Book>{
@@ -109,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 return response.json();
             }
             else {
-                return response.json();
+                return response.text();
             }
         })
         .catch(function (error) {
@@ -130,28 +145,56 @@ document.addEventListener("DOMContentLoaded", async function () {
         popupContent.style.display = "block";
     }
 
-    btnContinue.onclick = () =>{
-        const isbn = document.getElementById('isbn') as HTMLElement;
-        
-        fetch(`/book/${isbn.textContent}`, {method: 'DELETE'})
-        .then(response => {
-            if (response.ok)
-            {
+    btnContinue.addEventListener("click", async () =>{
+        try {
+            const delMsg = await deleteBook();
+            if (delMsg["message"]) {
                 popupContent.style.display = "none";
-                window.location.href = "/";        
+                window.location.href = "index.html";
             }
-            else
-                throw Error();
-        })
-        .catch(()=>{
+            else {
+                errorParagraph.style.display = "block";
+                errorParagraph.textContent = delMsg["error"];
+            }
+        } 
+        catch(error) {
             errorParagraph.style.display = "block";
-            errorParagraph.textContent = "Something went wrong. The book coudn't not be deleted.";
-        });
-    }
+                errorParagraph.textContent = error as string;
+        }
+    });
 
     btnCancel.onclick = () => {
         popupContent.style.display = "none";
         errorParagraph.style.display = "none";
         errorParagraph.textContent = "";
+    }
+
+    function validateIsbnNumber(isbn: string): boolean {
+        const isbn10Pattern = /^(?:\d[\ |-]?){9}[\d|X]$/;
+        const isbn13Pattern = /^(?=(?:\D*\d){13}\D*$)(\d[\ |-]?){13}$/;
+    
+        return isbn10Pattern.test(isbn) || isbn13Pattern.test(isbn);
+    }
+
+    async function deleteBook() {
+        const response = await fetch(`/book/${isbn}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                return response.json();
+            }
+        })
+        .catch(function (error) {
+            throw error;
+        });
+
+        return response;
     }
 })

@@ -205,6 +205,11 @@ app.get('/book/:isbn', async (req: Request, res: Response) => {
 
     const booksMap = new Map<string, Book>();
 
+    if (response.data.results.bindings.length == 0) {
+      res.status(404).send('Invalid ISBN');
+      return;
+    }
+
     response.data.results.bindings.forEach((bookBinding: any) => {
       const isbn = bookBinding.isbn.value;      
 
