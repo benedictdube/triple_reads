@@ -25,6 +25,42 @@ document.addEventListener("DOMContentLoaded", async function () {
 		const searchInfo = document.getElementById("searchInfo") as HTMLInputElement;
 		const value = searchInfo.value as string;
 
+		if (key == "abstract") {
+			// no validation 
+		}
+
+		else if (key == "title") {
+			// no validation 
+		}
+
+		else if (key == "author") {
+			// no validation 
+		}
+
+		else if (key == "genre") {
+			// no validation 
+		}
+
+		else if (key == "publishedYear") {
+			if (!isValidYear(value as string)) {
+				searchInfo.setCustomValidity("Please enter a valid published yesr");
+				searchInfo.reportValidity();
+				return "";
+			}
+		}
+
+		else if (key == "publisher") {
+			// no validation 
+		}
+
+		else if (key == "isbn") {
+			if (!validateIsbnNumber(value as string)) {
+				searchInfo.setCustomValidity("Please enter a valid ISBN number");
+				searchInfo.reportValidity();
+				return "";
+			}
+		}
+
 		try {
 			const grid = document.getElementById("book_grid") as HTMLElement;
 			grid.innerHTML = "";
@@ -86,5 +122,19 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         return response; 
+    }
+
+	function isValidYear(input: string): boolean {
+        const year = parseInt(input, 10);
+        const currentYear = new Date().getFullYear();
+    
+        return !isNaN(year) && year >= 1000 && year <= currentYear;
+    }
+
+	function validateIsbnNumber(isbn: string): boolean {
+        const isbn10Pattern = /^(?:\d[\ |-]?){9}[\d|X]$/;
+        const isbn13Pattern = /^(?=(?:\D*\d){13}\D*$)(\d[\ |-]?){13}$/;
+    
+        return isbn10Pattern.test(isbn) || isbn13Pattern.test(isbn);
     }
 })
