@@ -464,7 +464,7 @@ async function deleteBook(isbn: string): Promise<boolean> {
       }
     `;
 
-  const { data } = await axios.post(fusekiBaseUrl, null, {
+  const { data } = await axios.post(fusekiUrlUpdate, null, {
     params: {
       query: checkQuery,
     },
