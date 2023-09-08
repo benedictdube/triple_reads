@@ -63,6 +63,14 @@ function loadHeader() {
             const li_hyperlink = document.createElement("a") as HTMLAnchorElement;
             li_hyperlink.href = href;
             li_hyperlink.textContent = li_name;
+
+            if (li_name == "Log Out") {
+                li_hyperlink.addEventListener("click", () => {
+                    localStorage.clear();
+                    window.location.reload();
+                })
+            }
+
             li.appendChild(li_hyperlink);
             ul.appendChild(li);
         });
