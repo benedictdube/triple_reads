@@ -2,13 +2,13 @@ main {
     padding: 1em 12em;
 }
 
-form {
+#loginForm {
 	margin: auto;
 	width: 50%;
 	padding: 70px 0;
 }
 
-form label {
+#loginForm label {
     width: 100%;
     display: block;
     color: var(--sub-heading-color);
@@ -16,7 +16,8 @@ form label {
     flex: 1;
 }
 
-input[type=email], input[type=password] {
+#loginForm input[type=email], 
+#loginForm input[type=password] {
 	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
@@ -25,7 +26,7 @@ input[type=email], input[type=password] {
 	box-sizing: border-box;
 }
 
-button {
+#loginForm button {
 	background-color: var(--submit-btn-color);
 	color: white;
 	padding: 14px 20px;
@@ -35,6 +36,6 @@ button {
 	width: 100%;
 }
 
-button:hover {
+#loginForm button:hover {
     background-color: var(--submit-btn-color-hover);
 }
