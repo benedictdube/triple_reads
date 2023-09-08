@@ -13,15 +13,50 @@ const routeUrl = new URL(window.location.href);
 const isbn = routeUrl.searchParams.get('isbn') as string;
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Get the modal and close button
+    const modal = document.getElementById("successModal") as HTMLElement;
+    const closeButton = document.querySelector(".close") as HTMLSpanElement;
+
+    // Function to show the modal with a success message
+    function showSuccessPopup(message: string, showButton: string) {
+        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
+        successMessage.textContent = message;
+        modal.style.display = "block";
+
+        if (showButton.length > 0) {
+            closeButton.addEventListener("click", () => {
+                window.location.href = showButton;
+            });
+        }
+    }
+
+    // Close the modal when the close button is clicked
+    closeButton.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    // Close the modal when clicking outside the modal content
+    window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+    
     fetchAndDisplayBookDetails();
 
     async function fetchAndDisplayBookDetails() {
         const url = `/book/${isbn}`;
 
         try {
+            const updateBookForm = document.getElementById("updateBookForm") as HTMLElement;
             if (!validateIsbnNumber(isbn)) {
-                showSuccessPopup("Invalid ISBN");
+                showSuccessPopup("Invalid ISBN", "index.html");
+                return;
             }
+            else {
+                updateBookForm.style.display = "block";
+            }
+
             const response = await fetch(url);
             const bookData = await response.json();
 
@@ -80,10 +115,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 abstractInput.value = bookData.abstract;
 
             } else {
-                showSuccessPopup("Book not found with that ISBN");
+                showSuccessPopup("Book not found with that ISBN", "");
             }
         } catch (error) {
-            showSuccessPopup("Error fetching book details");
+            showSuccessPopup("Error fetching book details", "");
         }
     }
 
@@ -94,30 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const publisherInput = document.getElementById("publisherInput") as HTMLInputElement;
     const publishedInput = document.getElementById("publishedInput") as HTMLInputElement;
     const coverUrlInput = document.getElementById("coverUrlInput") as HTMLInputElement;
-
-    // Get the modal and close button
-    const modal = document.getElementById("successModal") as HTMLElement;
-    const closeButton = document.querySelector(".close") as HTMLSpanElement;
-
-    // Function to show the modal with a success message
-    function showSuccessPopup(message: string) {
-        const successMessage = document.getElementById("successMessage") as HTMLParagraphElement;
-        successMessage.textContent = message;
-        modal.style.display = "block";
-    }
-
-    // Close the modal when the close button is clicked
-    closeButton.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-
-    // Close the modal when clicking outside the modal content
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
-
 
     function createInputAuthorBox(index: number) {
         const mainBox = document.getElementById("authoursInput") as HTMLElement;
@@ -374,11 +385,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (bookAdded) {
-            showSuccessPopup("Book updated successfully!");
-            window.location.href = `viewBook.html?isbn=${isbn}`;
+            showSuccessPopup("Book updated successfully!", `viewBook.html?isbn=${isbn}`);
         }
         else {
-            showSuccessPopup("Book failed to update!");
+            showSuccessPopup("Book failed to update!", "");
         }
 
         return true;

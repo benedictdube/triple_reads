@@ -74,7 +74,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         const leftSection = document.getElementById("leftSection") as HTMLElement;
         const rightSection = document.getElementById("rightSection") as HTMLElement;
-        if (!validateIsbnNumber(isbn)) {
+        const book = await getBook(isbn) as unknown as Book;
+        if (!validateIsbnNumber(isbn) || typeof book === 'string') {
             showSuccessPopup("Invalid ISBN", "index.html");
             return;
         }
@@ -82,8 +83,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             leftSection.style.display = "flex";
             rightSection.style.display = "block";
         }
-
-        const book = await getBook(isbn) as unknown as Book;
+        
         if (book)
         {
             const coverBook = document.getElementById("coverBook") as HTMLImageElement;
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 return response.json();
             }
             else {
-                return response.json();
+                return response.text();
             }
         })
         .catch(function (error) {
